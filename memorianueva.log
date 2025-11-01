@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.31)  31 OCT 2025 20:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.31)  1 NOV 2025 11:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -975,7 +975,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 
 pdfTeX warning: pdflatex (file ./Figures/fondo.pdf): PDF inclusion: found PDF v
 ersion <1.6>, but at most version <1.5> allowed
-<Figures/fondo.pdf, id=123, 597.55246pt x 845.07718pt>
+<Figures/fondo.pdf, id=119, 597.55246pt x 845.07718pt>
 File: Figures/fondo.pdf Graphic file (type pdf)
 <use Figures/fondo.pdf>
 Package pdftex.def Info: Figures/fondo.pdf  used on input line 51.
@@ -1023,7 +1023,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 15
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 14
 .
  (C:\Program Files\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -1070,18 +1070,6 @@ LaTeX Info: Redefining \% on input line 1.
 
  (Chapters/Chapter1.tex
 Cap\'{\i }tulo 1.
-! Too many }'s.
-l.27 ...ada de los LEDs (\it{Light Emissor Doide}}
-                                                  ) de alta potencia al merc...
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 37.
-LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10.95> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 46.
-LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10.95> not available
-(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 46.
 
 
 
@@ -1089,96 +1077,55 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.48 S
-      e puede continuar luego modificando el resto de los archivos siguiendo...
-[1
+l.38 
+      [1
 
 
 ]
 
-LaTeX Warning: Reference `sec:FillingFile' on page 2 undefined on input line 48
-.
-
-
-LaTeX Warning: Reference `sec:FillingFile' on page 2 undefined on input line 48
-.
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 78.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 78.
-
-
-LaTeX Info: Redefining \. on input line 83.
-LaTeX Info: Redefining \% on input line 83.
+LaTeX Info: Redefining \. on input line 65.
+LaTeX Info: Redefining \% on input line 65.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
-(babel)             Reported on input line 83.
+(babel)             Reported on input line 65.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.83 
-      [2]
-
-LaTeX Warning: Reference `sec:biblio' on page 3 undefined on input line 84.
-
-
-LaTeX Warning: Reference `sec:FillingFile' on page 3 undefined on input line 90
-.
-
-
-
-LaTeX Info: Redefining \. on input line 105.
-LaTeX Info: Redefining \% on input line 105.
-[3] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
+l.65 L
+      a versiÃ³n mÃ¡s reciente de TexMaker es la 4.5 y se puede descargar de...
+[2] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
-26.
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 7
+5.
 
 (C:\Program Files\MiKTeX\tex/latex/psnfss\ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
-
-LaTeX Warning: Reference `fig:texmaker' on page 4 undefined on input line 138.
-
-
-LaTeX Warning: Reference `fig:texmaker' on page 4 undefined on input line 139.
-
-
-LaTeX Warning: Reference `fig:texmaker' on page 4 undefined on input line 140.
-
-
-LaTeX Warning: Reference `fig:texmaker' on page 4 undefined on input line 141.
-
-<./Figures/texmaker.png, id=265, 1371.1225pt x 710.655pt>
+<./Figures/texmaker.png, id=247, 1371.1225pt x 710.655pt>
 File: ./Figures/texmaker.png Graphic file (type png)
 <use ./Figures/texmaker.png>
-Package pdftex.def Info: ./Figures/texmaker.png  used on input line 147.
+Package pdftex.def Info: ./Figures/texmaker.png  used on input line 96.
 (pdftex.def)             Requested size: 194.90134pt x 101.00914pt.
 
 
-LaTeX Info: Redefining \. on input line 155.
-LaTeX Info: Redefining \% on input line 155.
-[4]
-
-LaTeX Warning: Reference `fig:docMaestro' on page 5 undefined on input line 156
-.
-
-<./Figures/docMaestro.png, id=277, 1273.75874pt x 448.67625pt>
+LaTeX Info: Redefining \. on input line 104.
+LaTeX Info: Redefining \% on input line 104.
+[3 <./Figures/texmaker.png>]
+<./Figures/docMaestro.png, id=261, 1273.75874pt x 448.67625pt>
 File: ./Figures/docMaestro.png Graphic file (type png)
 <use ./Figures/docMaestro.png>
-Package pdftex.def Info: ./Figures/docMaestro.png  used on input line 160.
+Package pdftex.def Info: ./Figures/docMaestro.png  used on input line 109.
 (pdftex.def)             Requested size: 389.80269pt x 137.30133pt.
 
 
-LaTeX Info: Redefining \. on input line 174.
-LaTeX Info: Redefining \% on input line 174.
-[5 <./Figures/texmaker.png> <./Figures/docMaestro.png>]
+LaTeX Info: Redefining \. on input line 131.
+LaTeX Info: Redefining \% on input line 131.
+[4 <./Figures/docMaestro.png>]
 (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
@@ -1209,79 +1156,61 @@ File: lstlang3.sty 2024/09/23 1.10c listings language file
 (C:\Program Files\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
 )
-LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 190.
-LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
-(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 191.
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10.95> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 178.
 
 
-LaTeX Info: Redefining \. on input line 219.
-LaTeX Info: Redefining \% on input line 219.
+LaTeX Info: Redefining \. on input line 179.
+LaTeX Info: Redefining \% on input line 179.
+[5]
+
+LaTeX Info: Redefining \. on input line 235.
+LaTeX Info: Redefining \% on input line 235.
 [6]
 
-LaTeX Warning: Reference `sec:biblio' on page 7 undefined on input line 223.
+LaTeX Warning: Citation 'ARTICLE:1' on page 7 undefined on input line 242.
 
 
-
-LaTeX Info: Redefining \. on input line 271.
-LaTeX Info: Redefining \% on input line 271.
-[7]
-
-LaTeX Warning: Citation 'ARTICLE:1' on page 8 undefined on input line 293.
+LaTeX Warning: Citation 'BOOK:1' on page 7 undefined on input line 242.
 
 
-LaTeX Warning: Citation 'BOOK:1' on page 8 undefined on input line 293.
+LaTeX Warning: Citation 'BOOK:2' on page 7 undefined on input line 242.
 
 
-LaTeX Warning: Citation 'BOOK:2' on page 8 undefined on input line 293.
+LaTeX Warning: Citation 'WEBSITE:1' on page 7 undefined on input line 242.
 
 
-LaTeX Warning: Citation 'WEBSITE:1' on page 8 undefined on input line 293.
-
-
-Overfull \hbox (7.76263pt too wide) in paragraph at lines 293--294
-[]\T1/ppl/m/it/10.95 Y cuan-do se usan, se mues-tran así: [[]], [[]], [[]], [[]
-].
+Overfull \hbox (21.46199pt too wide) in paragraph at lines 242--243
+[]\T1/ppl/m/n/10.95 Y cuan-do se usan, se mues-tran así: [[]], [[]], [[]], [[]]
+.
  []
-
-
-LaTeX Warning: Reference `subsec:configurando' on page 8 undefined on input lin
-e 295.
 
 )
 
 LaTeX Info: Redefining \. on input line 111.
 LaTeX Info: Redefining \% on input line 111.
-[8]
+[7]
 \openout2 = `Chapters/Chapter2.aux'.
 
  (Chapters/Chapter2.tex
-Cap\'{\i }tulo 2.
 
-LaTeX Warning: Reference `Chapter1' on page 9 undefined on input line 15.
-
-
-Overfull \hbox (9.94371pt too wide) in paragraph at lines 38--39
-[]\T1/ppl/m/it/10.95 Se re-co-mien-da no uti-li-zar \T1/ppl/b/it/10.95 tex-to e
-n ne-gri-tas \T1/ppl/m/it/10.95 en nin-gún pá-rra-fo, ni tam-po-co tex-to $[]$.
-
- []
-
-
-
-[9
+[8
 
 
 
 
 ]
+Cap\'{\i }tulo 2.
+
+
+[9]
 
 LaTeX Warning: Citation 'IEEE:citation' on page 10 undefined on input line 50.
 
 
 LaTeX Warning: Citation 'CIAA' on page 10 undefined on input line 50.
 
-<./Figures/cuadradoAzul.png, id=352, 180.675pt x 180.675pt>
+<./Figures/cuadradoAzul.png, id=343, 180.675pt x 180.675pt>
 File: ./Figures/cuadradoAzul.png Graphic file (type png)
 <use ./Figures/cuadradoAzul.png>
 Package pdftex.def Info: ./Figures/cuadradoAzul.png  used on input line 58.
@@ -1290,19 +1219,23 @@ File: ./Figures/cuadradoAzul.png Graphic file (type png)
 <use ./Figures/cuadradoAzul.png>
 Package pdftex.def Info: ./Figures/cuadradoAzul.png  used on input line 65.
 (pdftex.def)             Requested size: 81.303pt x 81.303pt.
-<./Figures/word.jpeg, id=355, 259.97125pt x 194.7275pt>
+<./Figures/word.jpeg, id=346, 259.97125pt x 194.7275pt>
 File: ./Figures/word.jpeg Graphic file (type jpg)
 <use ./Figures/word.jpeg>
 Package pdftex.def Info: ./Figures/word.jpeg  used on input line 74.
 (pdftex.def)             Requested size: 77.99197pt x 58.41869pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 75.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 75.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 79.
 
 
-LaTeX Info: Redefining \. on input line 82.
-LaTeX Info: Redefining \% on input line 82.
+LaTeX Info: Redefining \. on input line 81.
+LaTeX Info: Redefining \% on input line 81.
 [10 <./Figures/cuadradoAzul.png>]
-<./Figures/questionMark.png, id=365, 225.84375pt x 225.84375pt>
+<./Figures/questionMark.png, id=355, 225.84375pt x 225.84375pt>
 File: ./Figures/questionMark.png Graphic file (type png)
 <use ./Figures/questionMark.png>
 Package pdftex.def Info: ./Figures/questionMark.png  used on input line 87.
@@ -1321,8 +1254,8 @@ Package pdftex.def Info: ./Figures/questionMark.png  used on input line 114.
 (pdftex.def)             Requested size: 76.01157pt x 76.01392pt.
 
 
-LaTeX Info: Redefining \. on input line 144.
-LaTeX Info: Redefining \% on input line 144.
+LaTeX Info: Redefining \. on input line 128.
+LaTeX Info: Redefining \% on input line 128.
 [11 <./Figures/word.jpeg> <./Figures/questionMark.png>])
 
 LaTeX Info: Redefining \. on input line 112.
@@ -1398,8 +1331,14 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package rerunfilecheck Info: File `memorianueva.out' has not changed.
-(rerunfilecheck)             Checksum: E4B4BCFADDC3685A08C13ADEDED525C1;5363.
+
+Package rerunfilecheck Warning: File `memorianueva.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `memorianueva.out':
+(rerunfilecheck)             Before: 9994C8E6E59F78BAAFF197DA10CB74B6;5010
+(rerunfilecheck)             After:  8DED8FF7FF367C21FCBD97E480C7A0DF;4755.
 
 Package biblatex Warning: Please (re)run BibTeX on the file(s):
 (biblatex)                memorianueva
@@ -1410,16 +1349,24 @@ Package logreq Info: Writing requests to 'memorianueva.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33048 strings out of 468079
- 694441 string characters out of 5435808
- 1504744 words of memory out of 5000000
- 61140 multiletter control sequences out of 15000+600000
- 701169 words of font info for 135 fonts, out of 8000000 for 9000
+ 33025 strings out of 468079
+ 694180 string characters out of 5435808
+ 1506172 words of memory out of 5000000
+ 61127 multiletter control sequences out of 15000+600000
+ 692928 words of font info for 123 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 96i,20n,94p,1971b,2268s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 96i,20n,94p,1971b,2257s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.1.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.1.3.1} has been referenced but does not 
+exist, replaced by a fixed one
 
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
 Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX
@@ -1432,12 +1379,11 @@ TeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw
 fb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Fil
 es/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb><C:/Program Files/MiKTeX/fonts/t
 ype1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/palatino/
-uplbi8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Pr
-ogram Files/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX
-/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memorianueva.pdf (29 pages, 694791 bytes).
+uplr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Pro
+gram Files/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on memorianueva.pdf (29 pages, 662425 bytes).
 PDF statistics:
- 544 PDF objects out of 1000 (max. 8388607)
- 155 named destinations out of 1000 (max. 500000)
- 271 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 531 PDF objects out of 1000 (max. 8388607)
+ 152 named destinations out of 1000 (max. 500000)
+ 263 words of extra memory for PDF output out of 10000 (max. 10000000)
 

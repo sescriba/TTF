@@ -24,92 +24,41 @@ En este capítulo se introduce conceptos básicos de los sistemas de iluminació
 %----------------------------------------------------------------------------------------
 \section{Introducción a los sistemas de iluminación}
 
-A partir de la llegada de los LEDs (\it{Light Emissor Doide}) de alta potencia al mercado de la electrónica, los sistemas de iluminación del hogar (y en general) experimentaron una verdadera revolución comercial y tecnológica. Los bajos costos y la posibilidad de control de los mismos generaron un sin fin innovador que sigue vigente hoy en día. En una casa tipo es común observar lámparas LED de colores brillantes capaces de ser controladas con un teléfono celular produciendo un efecto visual poco pensado algunas décadas en el pasado o, también, su capacidad de ser encendidas o apagadas con un simple "click programado". Sin embargo es aún un desafío para los ingenieros poder integrar estos sistemas de iluminación a la arquitectura edilicia y que los mismos sean eficientes, vistosos y de bajo costo.
+A partir de la llegada de los LEDs ({\it{Light Emissor Doide}}) de alta potencia al mercado de la electrónica, los sistemas de iluminación del hogar (y en general) experimentaron una verdadera revolución comercial y tecnológica. Los bajos costos y la posibilidad de control de los mismos generaron un sin fin innovador que sigue vigente hoy en día. En una casa tipo es común observar lámparas LED de colores brillantes capaces de ser controladas con un teléfono celular produciendo un efecto visual poco pensado algunas décadas en el pasado o, también, su capacidad de ser encendidas o apagadas con un simple "click programado". Sin embargo es aún un desafío para los ingenieros poder integrar estos sistemas de iluminación a la arquitectura edilicia y que los mismos sean eficientes, vistosos y de bajo costo.
 
 \subsection{Iluminando una escalera moderna}
 
-Uno de los mayores problemas de la iluminación de los hogares modernos es lograr un efecto lumínico vistoso sobre espacios asimétricos, con un número elevado de bordes irregulares donde las sombras juegan un desafío. 
+Uno de los mayores problemas de la iluminación de los hogares modernos es lograr un efecto lumínico vistoso sobre espacios asimétricos, con un número elevado de bordes irregulares donde las sombras juegan un desafío. Un claro ejemplo son las escaleras, donde los propios escalones proyectan sombras sobre sus predecesores o antecesores. La ingeniería en iluminación se encargar de calcular para estos casos la cantidad de lúmenes (es decir, la cantidad de luz producida por una fuente) que debe tener un cierto volumen del espacio considerando sus deformaciones y en sintonía con normas específicas. El Código Residencial Internacional recomienda 100 lúmenes por pie cuadrado (alrededor de 100 centímetros cuadrados) en sectores de interior con escaleras y cuya temperatura de color ronde entre 2700 y 3000 Kelvin.
 
-\subsubsection{Una subsubsección}
+Sin embargo, hay otro aspecto que estos códigos no contemplan del todo: la eficiencia energética. Este factor es fundamental a la hora de efectuar una obra lumínica en un hogar, ya que definirá la estrategia constructiva de la escalera.
 
-Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
+\subsection{Eficiencia energética}
 
-\subsection{Guía matemática rápida para \LaTeX{}}
+Tanto el acceso a la energía eléctrica como la cantidad de watts que se consuman en un sistema de iluminación van a generar consideraciones importantes a la hora de pensar un sistema lumínico para una escalera. Si se dispone de pocos accesos a la energía, la oportunidad de agregar puntos de luz al espacio estará completamente limitado, afectado la capacidad de cubrir el mismo con los niveles de lúmenes adecuados. Además, deben considerarse el consumo total sobre dicho acceso energético y que la infraestructura lo soporte. 
 
-Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
-
-
-%----------------------------------------------------------------------------------------
-
-\section{Utilizando esta plantilla}
-
-Si estás familiarizado con \LaTeX{}, entonces podés explorar la estructura de directorios de esta plantilla y proceder a personalizarla agregando tu información en el bloque \emph{INFORMACIÓN DE LA PORTADA} en el archivo \file{memoria.tex}.  
-
-Se puede continuar luego modificando el resto de los archivos siguiendo los lineamientos que se describen en la sección \ref{sec:FillingFile} en la página \pageref{sec:FillingFile}.
-
-Debés asegurarte de leer el capítulo \ref{Chapter2} acerca de las convenciones utilizadas para las Memoria de los Trabajos Finales de la \degreename.
-
-Si sos nuevo en \LaTeX{}, se recomienda que continúes leyendo el documento ya que contiene información básica para aprovechar el potencial de esta herramienta.
+A pesar de estos inconvenientes, los avances tecnológicos han generado soluciones a partir de la invención de las tiras LED, cuyo consumo energético es alrededor de un 90\% menor a un sistema de iluminación tradicional. A grandes rasgos, estas tiras logran iluminar 100 lúmenes por vatio de energía, mientras que una bombilla incandescente ofrecen 20 lúmenes por vatio. Por otro lado, su desarrollo longitudinal permite transportar la electricidad desde un único punto de acceso energético hasta el fin del espacio a iluminar sin el adicional de cableado.
 
 
 %----------------------------------------------------------------------------------------
 
-\section{Qué incluye esta plantilla}
+\section{Motivación}
 
-\subsection{Carpetas}
+Si bien existen múltiples sistemas de iluminación para el hogar, las escaleras son aún un territorio poco explorado y con gran versatilidad a diseños. Además, los avances de la electrónica juegan un rol fundamental para que estos diseños sea innovadores, con capacidad de control sobre el qué y el cómo se desea iluminar por parte del usuario.
 
-Esta plantilla se distribuye como una único archivo .zip que se puede descomprimir en varios archivos y carpetas. Asimismo, se puede consultar el repositorio git para obtener la última versión de los archivos, \url{https://github.com/patriciobos/Plantilla-CESE.git}. Los nombres de las carpetas son, o pretender ser, auto-explicativos.
+La amplia gama de sensores y actuadores de bajo costo, así como los sistemas de comunicación sin cableado, son la motivación para generar un nuevo módulo lumínico transformable que responda a las necesidades de un usuario particular. 
 
-\keyword{Appendices} -- Esta es la carpeta donde se deben poner los apéndices. Cada apéndice debe ir en su propio archivo \file{.tex}. Se incluye un ejemplo y una plantilla en la carpeta.
-
-\keyword{Chapters} -- Esta es la carpeta donde se deben poner los capítulos de la memoria. Cada capítulo debe ir un su propio archivo \file{.tex} por separado.  Se ofrece por defecto, la siguiente estructura de capítulos y se recomienda su utilización dentro de lo posible:
-
-\begin{itemize}
-\item Capítulo 1: Introducción general	
-\item Capítulo 2: Introducción específica
-\item Capítulo 3: Diseño e implementación
-\item Capítulo 4: Ensayos y resultados
-\item Capítulo 5: Conclusiones
-
-\end{itemize}
-
-Esta estructura de capítulos es la que se recomienda para las memorias de la especialización.
-
-\keyword{Figures} -- Esta carpeta contiene todas las figuras de la memoria.  Estas son las versiones finales de las imágenes que van a ser incluidas en la memoria.  Pueden ser imágenes en formato \textit{raster}\footnote{\url{https://en.wikipedia.org/wiki/Raster_graphics}} como \file{.png}, \file{.jpg} o en formato vectoriales\footnote{\url{https://en.wikipedia.org/wiki/Vector_graphics}} como \file{.pdf}, \file{.ps}.  Se debe notar que utilizar imágenes vectoriales disminuye notablemente el peso del documento final y acelera el tiempo de compilación por lo que es recomendable su utilización siempre que sea posible.
-
-\subsection{Archivos}
-
-También están incluidos varios archivos, la mayoría de ellos son de texto plano y se puede ver su contenido en un editor de texto. Después de la compilación inicial, se verá que más archivos auxiliares son creados por \ LaTeX{} o BibTeX, pero son de uso interno y no es necesario hacer nada en particular con ellos.  Toda la información necesaria para compilar el documento se encuentra en los archivos \file{.tex}, \file{.bib}, \file{.cls} y en las imágenes de la carpeta Figures.
-
-\keyword{referencias.bib} - este es un archivo importante que contiene toda la información de referencias bibliográficas que se utilizarán para las citas en la memoria en conjunto con BibTeX. Usted puede escribir las entradas bibliográficas en forma manual, aunque existen también programas de gestión de referencias que facilitan la creación y gestión de las referencias y permiten exportarlas en formato BibTeX.  También hay disponibles sitios web como \url{books.google.com} que permiten obtener toda la información necesaria para una cita en formato BibTeX. Ver sección \ref{sec:biblio}
-
-\keyword{MastersDoctoralThesis.cls} -- este es un archivo importante. Es el archivos con la clase que le informa a \LaTeX{} cómo debe dar formato a la memoria. El usuario de la plantilla no debería necesitar modificar nada de este archivo.
-
-\keyword{memoria.pdf} -- esta es su memoria con una tipografía bellamente compuesta (en formato de archivo PDF) creado por \LaTeX{}. Se distribuye con la plantilla y después de compilar por primera vez sin hacer ningún cambio se debería obtener una versión idéntica a este documento.
-
-\keyword{memoria.tex} -- este es un archivo importante. Este es el archivo que tiene que compilar \LaTeX{} para producir la memoria como un archivo PDF. Contiene un marco de trabajo y estructuras que le indican a \LaTeX{} cómo diagramar la memoria.  Está altamente comentado para que se pueda entender qué es lo que realiza cada línea de código y por qué está incluida en ese lugar.  En este archivo se debe completar la información personalizada de las primeras sección según se indica en la sección \ref{sec:FillingFile}.
-
-Archivos que \emph{no} forman parte de la distribución de la plantilla pero que son generados por \LaTeX{} como archivos auxiliares necesarios para la producción de la memoria.pdf son:
-
-\keyword{memoria.aux} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-\keyword{memoria.bbl} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Mientras que el archivo \file{.bib} contiene todas las referencias que hay, este archivo \file{.bbl} contine sólo las referencias que han sido citadas y se utiliza para la construcción de la bibiografía.
-
-\keyword{memoria.blg} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-\keyword{memoria.lof} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Figuras}.
- 
-\keyword{memoria.log} --  este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Contiene mensajes de \LaTeX{}. Si se reciben errores o advertencias durante la compilación, se guardan en este archivo \file{.log}.
-
-\keyword{memoria.lot} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Tablas}.
-
-\keyword{memoria.out} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-De esta larga lista de archivos, sólo aquellos con la extensión \file{.bib}, \file{.cls} y \file{.tex} son importantes.  Los otros archivos auxiliares pueden ser ignorados o borrados ya que \LaTeX{} y BibTeX los regenerarán durante la compilación.
 
 %----------------------------------------------------------------------------------------
 
-\section{Entorno de trabajo}
+\section{Objetivos y alcances}
+
+Este trabajo de desarrollo pretende integrar los avances e innovaciones tecnológicas en la iluminación del hogar agregando valor a bajo costo y control por parte del usuario. Es así que, integrando los conocimientos adquiridos a lo largo de la Carrera de Especialidad en Sistemas Embebidos de la Universidad de Buenos Aires, se desarrolla el Firmware en lenguaje de programación C de un sistema embebido basado en tiras LED y controlado mediante sensores de proximidad que permita iluminar una escalera de una cantidad fija de escalones. También es parte de este proyecto la incorporación de un control mediante tecnología Bluetooth de la tonalidad de la luz, brillo y color, así como su encendido o apagado de acuerdo a la circulación del usuario por la escalera.
+
+Por otro lado, no es parte de este trabajo el desarrollo de un Hardware integral, si no que se produce un prototipo funcional utilizando componentes de fabricantes comerciales. Tampoco es parte de este proyecto el desarrollo del código de una interfaz de usuario ni brindar soporte a la misma.
+
+%----------------------------------------------------------------------------------------
+
+\section{Estado del arte}
 
 Ante de comenzar a editar la plantilla debemos tener un editor \LaTeX{} instalado en nuestra computadora.  En forma análoga a lo que sucede en lenguaje C, que se puede crear y editar código con casi cualquier editor, existen ciertos entornos de trabajo que nos pueden simplificar mucho la tarea.  En este sentido, se recomienda, sobre todo para los principiantes en \LaTeX{} la utilización de TexMaker, un programa gratuito y multi-plantaforma que está disponible tanto para windows como para sistemas GNU/linux.
 
