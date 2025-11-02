@@ -60,24 +60,25 @@ Por otro lado, no es parte de este trabajo el desarrollo de un Hardware integral
 
 \section{Estado del arte}
 
-Ante de comenzar a editar la plantilla debemos tener un editor \LaTeX{} instalado en nuestra computadora.  En forma análoga a lo que sucede en lenguaje C, que se puede crear y editar código con casi cualquier editor, existen ciertos entornos de trabajo que nos pueden simplificar mucho la tarea.  En este sentido, se recomienda, sobre todo para los principiantes en \LaTeX{} la utilización de TexMaker, un programa gratuito y multi-plantaforma que está disponible tanto para windows como para sistemas GNU/linux.
-
-La versión más reciente de TexMaker es la 4.5 y se puede descargar del siguiente link: \url{http://www.xm1math.net/texmaker/download.html}. Se puede consultar el manual de usuario en el siguiente link: \url{http://www.xm1math.net/texmaker/doc.html}.
+En esta sección se presentan algunos productos similares al aquí desarrollado disponibles en el mercado. Se realiza un pequeño análisis de las prestaciones y costos y se exponen las diferencias y similitudes con el propuesto en esta memoria.
  
 
-\subsection{Paquetes adicionales}
+\subsection{SuperlightingLED}
 
-Si bien durante el proceso de instalación de TexMaker, o cualquier otro editor que se haya elegido, se instalarán en el sistema los paquetes básicos necesarios para trabajar con \LaTeX{}, la plantilla de los trabajos de Especialización y Maestría requieren de paquete adicionales.
+La empresa de tecnología LED SuperlightingLED ofrece en el mercado internacional un sistema de iluminación de escaleras con tecnología de tiras LEDs y sensores de movimientos (SCSSLKIT-12V-COB). De acuerdo a su pagina de ventas este producto consta de un microcontrolador ES32 y dos sensores de movimiento ubicados al extremo de la escalera donde se instala. Además cuenta con una fuente de alimentación de 12V y las tiras LED (de color y temperatura variables) para cubrir hasta 32 escalones de un ancho total de 1,2 metros cada uno las cuales debe estar cableadas a la central de controladora. Cuenta con dos versiones principales tanto para interior (IP20) como para exterior (IP67) y también puede o no incluir perfiles de aluminio para facilitar su instalación. En las figuras \ref{fig:spled1} y \ref{fig:spled2} se puede apreciar los componentes de este sistema que al día de la fecha tiene un costo de unos 160USD en su versión más económica y hasta 630USD en su versión premium. Para más información puede visitar la página web de \textit{SuperlightingLED}\footnote{\url{https://www.superlightingled.com}}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/superlightingLED.png}
+	\caption{Sistema de SuperlightingLED y su conexión.}
+	\label{fig:spled1}
+\end{figure}
 
-Se indican a continuación los comandos que se deben introducir en la consola de Ubuntu (ctrl + alt + t) para instalarlos:
-
-\begin{lstlisting}[language=bash]
-  $ sudo apt install texlive-lang-spanish texlive-science 
-  $ sudo apt install texlive-bibtex-extra biber
-  $ sudo apt install texlive texlive-fonts-recommended
-  $ sudo apt install texlive-latex-extra
-\end{lstlisting}
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/superlightingLED2.png}
+	\caption{Componentes incluidos en el paquete básico.}
+	\label{fig:spled2}
+\end{figure}
 
 \subsection{Configurando TexMaker}
 \label{subsec:configurando}
