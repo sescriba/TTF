@@ -38,6 +38,38 @@ Tanto el acceso a la energía eléctrica como la cantidad de watts que se consum
 
 A pesar de estos inconvenientes, los avances tecnológicos han generado soluciones a partir de la invención de las tiras LED, cuyo consumo energético es alrededor de un 90\% menor a un sistema de iluminación tradicional. A grandes rasgos, estas tiras logran iluminar 100 lúmenes por vatio de energía, mientras que una bombilla incandescente ofrecen 20 lúmenes por vatio. Por otro lado, su desarrollo longitudinal permite transportar la electricidad desde un único punto de acceso energético hasta el fin del espacio a iluminar sin el adicional de cableado.
 
+%----------------------------------------------------------------------------------------
+
+\section{Estado del arte}
+
+En esta sección se presentan algunos productos similares al aquí desarrollado disponibles en el mercado. Se realiza un pequeño análisis de las prestaciones y costos y se exponen las diferencias y similitudes con el propuesto en esta memoria.
+ 
+\subsection{SuperlightingLED}
+
+La empresa de tecnología LED SuperlightingLED ofrece en el mercado internacional un sistema de iluminación de escaleras con tecnología de tiras LEDs y sensores de movimientos (SCSSLKIT-12V-COB). De acuerdo a su pagina de ventas este producto consta de un microcontrolador ES32 y dos sensores de movimiento ubicados al extremo de la escalera donde se instala. Además cuenta con una fuente de alimentación de 12V y las tiras LED (de color y temperatura variables) para cubrir hasta 32 escalones de un ancho total de 1,2 metros cada uno las cuales debe estar cableadas a la central de controladora. Cuenta con dos versiones principales tanto para interior (IP20) como para exterior (IP67) y también puede o no incluir perfiles de aluminio para facilitar su instalación. En las figuras \ref{fig:spled1} y \ref{fig:spled2} se puede apreciar los componentes de este sistema que al día de la fecha tiene un costo de unos U\$D160 en su versión más económica y hasta U\$D630 en su versión premium. Para más información puede visitar la página web de \textit{SuperlightingLED}\footnote{\url{https://www.superlightingled.com}}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, height=10cm]{./Figures/superlightingLED.png}
+	\caption{Sistema de SuperlightingLED y su conexión.}
+	\label{fig:spled1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, height=10cm]{./Figures/superlightingLED2.png}
+	\caption{Componentes incluidos en el paquete básico.}
+	\label{fig:spled2}
+\end{figure}
+
+\subsection{GIDEALED}
+
+Otro producto presente en el mercado al cual se lo puede vincular con el proyecto tratado en esta memoria es el sistema de iluminación de escaleras de la empresa \textit{GIDEALED}\footnote{\url{https://www.amazon.com/stores/GIDEALED/page/55B6DBC4-21FB-439B-AC80-13FDE4121084}} modelo RL-STEP-09. Este sistema apto para hasta 20 escalones de un metro de ancho, posee un voltaje de funcionamiento de 12V y consta de dos sensores de movimientos del tipo PIR (\textit{Passive Infrared Sensor}, por sus siglas en inglés) a instalar en los extremos de la escalera además de un control remoto infrarrojo para el control del encendido y apagado. Las tiras LED incluidas en el kit son de color fijo de temperatura 3000K con control de brillo e intensidad sin protección al agua o humedad. La figura \ref{fig:gidealed} muestra los componentes del kit que se encuentra a la venta en la República Argentina por el precio de ARS210000.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, height=10cm]{./Figures/GIDEALED.png}
+	\caption{Sistema para escaleras de GIDEALED.}
+	\label{fig:gidealed}
+\end{figure}
 
 %----------------------------------------------------------------------------------------
 
@@ -57,35 +89,3 @@ Este trabajo de desarrollo pretende integrar los avances e innovaciones tecnoló
 Por otro lado, no es parte de este trabajo el desarrollo de un Hardware integral, si no que se produce un prototipo funcional utilizando componentes de fabricantes comerciales. Tampoco es parte de este proyecto el desarrollo del código de una interfaz de usuario ni brindar soporte a la misma.
 
 %----------------------------------------------------------------------------------------
-
-\section{Estado del arte}
-
-En esta sección se presentan algunos productos similares al aquí desarrollado disponibles en el mercado. Se realiza un pequeño análisis de las prestaciones y costos y se exponen las diferencias y similitudes con el propuesto en esta memoria.
- 
-
-\subsection{SuperlightingLED}
-
-La empresa de tecnología LED SuperlightingLED ofrece en el mercado internacional un sistema de iluminación de escaleras con tecnología de tiras LEDs y sensores de movimientos (SCSSLKIT-12V-COB). De acuerdo a su pagina de ventas este producto consta de un microcontrolador ES32 y dos sensores de movimiento ubicados al extremo de la escalera donde se instala. Además cuenta con una fuente de alimentación de 12V y las tiras LED (de color y temperatura variables) para cubrir hasta 32 escalones de un ancho total de 1,2 metros cada uno las cuales debe estar cableadas a la central de controladora. Cuenta con dos versiones principales tanto para interior (IP20) como para exterior (IP67) y también puede o no incluir perfiles de aluminio para facilitar su instalación. En las figuras \ref{fig:spled1} y \ref{fig:spled2} se puede apreciar los componentes de este sistema que al día de la fecha tiene un costo de unos U\$D160 en su versión más económica y hasta U\$D630 en su versión premium. Para más información puede visitar la página web de \textit{SuperlightingLED}\footnote{\url{https://www.superlightingled.com}}.
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/superlightingLED.png}
-	\caption{Sistema de SuperlightingLED y su conexión.}
-	\label{fig:spled1}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/superlightingLED2.png}
-	\caption{Componentes incluidos en el paquete básico.}
-	\label{fig:spled2}
-\end{figure}
-
-\subsection{GIDEALED}
-
-Otro producto presente en el mercado al cual se lo puede vincular con el proyecto tratado en esta memoria es el sistema de iluminación de escaleras de la empresa \textit{GIDEALED}\footnote{\url{https://www.amazon.com/stores/GIDEALED/page/55B6DBC4-21FB-439B-AC80-13FDE4121084}} modelo RL-STEP-09. Este sistema apto para hasta 20 escalones de un metro de ancho, posee un voltaje de funcionamiento de 12V y consta de dos sensores de movimientos del tipo PIR (\textit{Passive Infrared Sensor}, por sus siglas en inglés) a instalar en los extremos de la escalera además de un control remoto infrarrojo para el control del encendido y apagado. Las tiras LED incluidas en el kit son de color fijo de temperatura 3000K con control de brillo e intensidad sin protección al agua o humedad. La figura \ref{fig:gidealed} muestra los componentes del kit que se encuentra a la venta en la República Argentina por el precio de ARS210000.
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/GIDEALED.png}
-	\caption{Sistema para escaleras de GIDEALED.}
-	\label{fig:gidealed}
-\end{figure}
