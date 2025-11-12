@@ -5,16 +5,25 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
+En este capitulo se mencionan los componentes, software y programas de terceros utilizados para el desarrollo del sistema de esta memoria.
 
-\section{Estilo y convenciones}
+\section{Componentes del sistema}
 \label{sec:ejemplo}
 
-\subsection{Uso de mayúscula inicial para los título de secciones}
+El sistema de iluminación cuenta con un conjunto de componentes necesarios para su funcionamiento, que van desde lenguajes de programación hasta pequeños componentes electrónicos. A continuación se hace mención a cada uno de ellos con una breve descripción. 
 
-Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
+\subsection{Hardware}
 
-Cuando se quiere poner una lista tabulada, se hace así:
+\subsubsection{Microcontrolador}
+Este proyecto utiliza un microcontrolador de 32 bits de la marca STM32 modelo F4 basado en el núcleo Arm® Cortex®-M4 con un frecuencia de hasta 180 MHz. Incluye una unidad de punto flotante de precisión simple e incorporan memorias embebidas de alta velocidad (memoria Flash de 2 Mbytes y hasta 256 Kbytes de SRAM). Cuenta con un gran numero de entradas/salidas, convertidores analógicos digitales, periféricos de modulación de pulsos y hasta 12 temporizadores. Posee además de un gran numero de interfaces de comunicación entre las que se destacan UART, I2C, SMBus y SPI. Para el desarrollo de este proyecto se utiliza una placa de evaluación Núcleo de la marca STM modelo F429ZI la cual dispone de todos los elementos necesarios para el uso del microcontrolador.
+
+\subsubsection{Tira LED pixel}
+Para el desarrollo del sistema de iluminación se dispone de una tira LED del tipo pixel. La misma consta de tres diodos emisores de luz (uno para cada color primario) en conjunto con un controlador modelo WS2812B. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal, en conjunto con un oscilador interno de alta precisión. Utiliza un protocolo de comunicación NZR de un solo cable donde el puerto de entrada recibe los datos enviados por el microcontrolador son almacenados en un registro interno y transferidos por el puerto de salida al siguiente dispositivo conectado en cadena. El dato consta de 24 pulsos (8 por color), donde un cero lógico debe estar compuesto por 0.4 us en alto y 0.85 en bajo y un uno lógico por 0.8us en alto y 0.45 us en bajo.
+
+El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira, con un consumo cercano a 1 uA por LED.
+
+\subsubsection{Modulo extensor de puertos}
+También se dispone de un modulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores en la escalera. Para este desarrollo se utiliza el modulo I2C PCF8574 de la marca Texas Instruments
 
 \begin{itemize}
 	\item Este es el primer elemento de la lista.
