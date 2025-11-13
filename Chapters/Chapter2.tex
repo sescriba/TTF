@@ -15,34 +15,56 @@ El sistema de iluminación cuenta con un conjunto de componentes necesarios para
 \subsection{Hardware}
 
 \subsubsection{Microcontrolador}
-Este proyecto utiliza un microcontrolador de 32 bits de la marca STM32 modelo F4 basado en el núcleo Arm® Cortex®-M4 con un frecuencia de hasta 180 MHz. Incluye una unidad de punto flotante de precisión simple e incorporan memorias embebidas de alta velocidad (memoria Flash de 2 Mbytes y hasta 256 Kbytes de SRAM). Cuenta con un gran numero de entradas/salidas, convertidores analógicos digitales, periféricos de modulación de pulsos y hasta 12 temporizadores. Posee además de un gran numero de interfaces de comunicación entre las que se destacan UART, I2C, SMBus y SPI. Para el desarrollo de este proyecto se utiliza una placa de evaluación Núcleo de la marca STM modelo F429ZI la cual dispone de todos los elementos necesarios para el uso del microcontrolador.
+Este proyecto utiliza un microcontrolador de 32 bits de la marca STMicrocontroller modelo F4 basado en el núcleo Arm Cortex-M4 con un frecuencia de trabajo de hasta 180 MHz. Incluye una unidad de punto flotante de precisión simple e incorporan memorias embebidas de alta velocidad (memoria Flash de 2 Mbytes y hasta 256 Kbytes de SRAM). Cuenta con un gran numero de entradas/salidas, convertidores analógicos digitales y hasta 12 temporizadores (incluyendo dos para modulación de pulsos). Posee además de un gran numero de interfaces de comunicación entre las que se destacan UART ({\it{Universal Asynchronous Receiver-Transmitter}}), I2C ({\it{Inter-Integrated Circuit}}), SMBus ({\it{System Management Bus}}) y SPI ({\it{Serial Peripheral Interface}}). Para el desarrollo de este proyecto se da uso a la placa de evaluación Núcleo de la marca STM modelo F429ZI que dispone de todos los periféricos necesarios para el uso del microcontrolador y sus componentes.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5cm, height=5cm]{./Figures/nucleo.jpg}
+	\caption{Placa de evaluación Núcleo de STM.}
+	\label{fig:nucleo}
+\end{figure}
 
 \subsubsection{Tira LED pixel}
-Para el desarrollo del sistema de iluminación se dispone de una tira LED del tipo pixel. La misma consta de tres diodos emisores de luz (uno para cada color primario) en conjunto con un controlador modelo WS2812B. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal, en conjunto con un oscilador interno de alta precisión. Utiliza un protocolo de comunicación NZR de un solo cable donde el puerto de entrada recibe los datos enviados por el microcontrolador son almacenados en un registro interno y transferidos por el puerto de salida al siguiente dispositivo conectado en cadena. El dato consta de 24 pulsos (8 por color), donde un cero lógico debe estar compuesto por 0.4 us en alto y 0.85 en bajo y un uno lógico por 0.8us en alto y 0.45 us en bajo.
+Para el desarrollo del sistema de iluminación se dispone de una tira LED del tipo pixel. La misma consta conjuntos de tres diodos emisores de luz (uno para cada color primario RGB) con un controlador modelo WS2812B conectados en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal, en conjunto con un oscilador interno de alta precisión. Utiliza un protocolo de comunicación NZR ({\it{Non Return Zero}}) de un solo cable, donde el puerto de entrada recibe los datos enviados por el microcontrolador, son almacenados en un registro interno y transferidos por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}.  El dato consta de 24 pulsos (8 por color), donde un cero lógico debe estar compuesto por 0.4 $\mu$s en alto y 0.85 $\mu$s en bajo y un uno lógico por 0.8 $\mu$s en alto y 0.45 $\mu$s en bajo.
 
 El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira, con un consumo cercano a 1 uA por LED.
 
-\subsubsection{Modulo extensor de puertos}
-También se dispone de un modulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores en la escalera. Para este desarrollo se utiliza el modulo I2C PCF8574 de la marca Texas Instruments
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5cm, height=5cm]{./Figures/leds.png}
+	\caption{Conexión en cadena de los dispositivos WS2812B.}
+	\label{fig:led}
+\end{figure}
+
+\subsubsection{Módulo extensor de puertos}
+También se dispone de un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments, el cual dispone de conexión I2C de 100 kHz con microcontrolador y la capacidad de direccionar hasta 8 de los mismos. Su tensión de trabajo es de 5 V y su consumo promedio de 25 mA.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5cm, height=5cm]{./Figures/extensorgpio.png}
+	\caption{Extensor multipropósito PCF8574.}
+	\label{fig:gpio}
+\end{figure}
+
+\subsubsection{Módulo de comunicación Bluetooth}
+El módulo para la interacción con el usuario utilizado en este trabajo es el HC-05 (en conjunto con la placa de evaluación ZS-040), cuyo protocolo es Bluetooth 2.0 y dispone de una configuración simultanea tanto como maestro y como esclavo. Se conecta al microcontrolador a través de interfaz serie, requiriendo una tensión de 5 V y con un consumo de 100 mA.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5cm, height=5cm]{./Figures/BT.jpg}
+	\caption{Módulo Bluetooth HC-05 montado sobre ZS-040.}
+	\label{fig:bt}
+\end{figure}
+\subsection{Software}
+En esta sección se mencionan los software, lenguajes de programación y herramientas desarrolladas por terceros que fueron utilizados para el desarrollo de este proyecto.
 
 \begin{itemize}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
+	\item Visual Studio Code: es editor de código fuente gratuito y multiplataforma desarrollado por la empresa Microsoft. Posee un conjunto de extensiones que permite añadir soporte para cualquier lenguaje de programación y depuración.
+	\item STM32 CubeIDE: es entorno de desarrollo integrado (IDE, por sus siglas en inglés) de código abierto para programar microcontroladores y microprocesadores de la familia STM32. Permite configurar periféricos, generar código automáticamente, compilarlo y depurarlo en la misma plataforma Se encuentra basado en el entorno de desarrollo Eclipse. 
+    \item MIT APP Inventor: es una plataforma gratuita y en línea para la creación de aplicaciones para dispositivos Android. Desarrollado por el Instituto Tecnológico de Massachusetts, permite a los usuarios no técnicos diseñar y crear aplicaciones funcionales a través de un navegador web.
+    \item Lenguaje de programación C: es un lenguaje de programación de propósito general e imperativo que permite el control directo del hardware. Fue creado por Dennis Ritchie y Ken Thompson entre 1969 y 1972 y se caracteriza por su eficiencia, portabilidad y la capacidad de manipular memoria mediante punteros, ideal para sistemas operativos, software embebido y controladores de hardware. 
+    \item Compilador GCC (GNU Compiler Collection): es un conjunto de compiladores creado por el Proyecto GNU y distribuido como software libre que permite compilar código en lenguaje C, C++, Objective-C, Fortran entre otros. Su propósito es tomar un programa escrito en un lenguaje de alto nivel (como C) y transformarlo en un programa ejecutable en lenguaje de máquina.
+    \item Doxigen: es una herramienta de generación automática de documentación técnica a partir de los comentarios en el código fuente de lenguajes como C++, C, Java y Python. Analiza el código para extraer y formatear la información en formatos HTML o PDF y permite mantener la documentación sincronizada con el código.
 \end{itemize}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-Si se desea poner una lista numerada el formato es este:
-
-\begin{enumerate}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{enumerate}
-
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-\subsection{Este es el título de una subsección}
-\label{subsec:ejemplo}
+\section{Protocolos de comunicación}
 
 Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
 
