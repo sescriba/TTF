@@ -5,54 +5,56 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-En este capitulo se mencionan los componentes, software y programas de terceros utilizados para el desarrollo del sistema expuesto en esta memoria.
+En este capítulo se describen los componentes, software y programas de terceros utilizados para el desarrollo del sistema expuesto en esta memoria.
 
-\section{Componentes del sistema}
+\section{Componentes de hardware del sistema}
+\label{sec:componentes}
 
 El sistema de iluminación cuenta con un conjunto de componentes necesarios para su funcionamiento, que van desde lenguajes de programación hasta pequeños componentes electrónicos. A continuación se hace mención a cada uno de ellos con una breve descripción. 
 
-\subsection{Hardware}
-\label{sec:componentes}
+\subsection{Microcontrolador STM32F4}
+El sistema propuesto incorpora un microcontrolador de 32 bits de la marca STMicrocontroller, modelo F4, basado en el núcleo Arm Cortex-M4 con un frecuencia de trabajo de hasta 180 MHz. Dispone de una unidad de punto flotante de precisión simple y memorias embebidas de alta velocidad, entre ellas 2 Mbytes de memoria Flash y hasta hasta 256 kbytes de SRAM.
 
-\subsubsection{Microcontrolador}
-Este proyecto utiliza un microcontrolador de 32 bits de la marca STMicrocontroller modelo F4 basado en el núcleo Arm Cortex-M4 con un frecuencia de trabajo de hasta 180 MHz. Incluye una unidad de punto flotante de precisión simple e incorpora memorias embebidas de alta velocidad (memoria Flash de 2 Mbytes y hasta 256 Kbytes de SRAM). Cuenta con un gran numero de entradas/salidas, convertidores analógicos digitales y hasta 12 temporizadores (incluyendo dos para modulación de pulsos). Posee además de un gran número de interfaces de comunicación entre las que se destacan UART ({\it{Universal Asynchronous Receiver-Transmitter}}), I\textsuperscript{2}C ({\it{Inter-Integrated Circuit}}), SMBus ({\it{System Management Bus}}) y SPI ({\it{Serial Peripheral Interface}}). Para el desarrollo de este proyecto se da uso a la placa de evaluación Núcleo de la marca STM modelo F429ZI que dispone de todos los periféricos necesarios para el uso del microcontrolador y sus componentes.
+Cuenta con un gran número de entradas/salidas, convertidores analógicos-digitales y hasta 12 temporizadores, incluidos dos destinados a modulación por pulsos. Posee además diversas interfaces de comunicación entre las que se destacan UART ({\it{Universal Asynchronous Receiver-Transmitter}}), I\textsuperscript{2}C ({\it{Inter-Integrated Circuit}}), SMBus ({\it{System Management Bus}}) y SPI ({\it{Serial Peripheral Interface}}). Para el desarrollo de este trabajo se da uso a la placa de evaluación Nucleo de la marca STM modelo F429ZI que dispone de todos los periféricos necesarios para el uso del microcontrolador y sus componentes.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=5cm, height=5cm]{./Figures/nucleo.jpg}
+	\includegraphics[width=7cm, height=4cm]{./Figures/nucleo.jpg}
 	\caption{Placa de evaluación Núcleo de STM.}
-    \footnote{\url{https://www.st.com/}}
+    \footnote{\url{https://www.distrelec.ch/en/stm32-nucleo-board-2mb-256kb-st-nucleo-f429zi/p/30176552}}
 	\label{fig:nucleo}
 
 \end{figure}
 
 
-\subsubsection{Tira LED pixel}
-Para el desarrollo del sistema de iluminación se dispone de una tira LED del tipo pixel. La misma consta de conjuntos de tres diodos emisores de luz (uno para cada color primario RGB) con un controlador modelo WS2812B conectados en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal, en conjunto con un oscilador interno de alta precisión. Utiliza un protocolo de comunicación NZR ({\it{Non Return Zero}}) de un solo cable, donde el puerto de entrada recibe los datos enviados por el microcontrolador, son almacenados en un registro interno y transferidos por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}.  El dato está compuesto de 24 pulsos (8 por color), donde un cero lógico debe estar compuesto por 0.4 $\mu$s en alto y 0.85 $\mu$s en bajo y un uno lógico por 0.8 $\mu$s en alto y 0.45 $\mu$s en bajo.
+\subsection{Tira LED pixel}
+Para el desarrollo del sistema de iluminación se utiliza una tira LED del tipo pixel. Está formada por conjuntos de tres diodos emisores de luz, uno para cada color primario RGB, con un controlador modelo WS2812B conectado en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal y un oscilador interno de alta precisión.
 
-El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira cercano a 1 uA por LED.
+Emplea un protocolo de comunicación NZR de un solo cable. El puerto de entrada recibe los datos enviados por el microcontrolador, los almacena en un registro interno y los transfiere por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}. El dato está compuesto por 24 pulsos, ocho por cada color. Un cero lógico debe estar formado por 0,4 microsegundos en alto y 0,85 microsegundos en bajo, mientras que un uno lógico corresponde a 0,8 microsegundos en alto y 0,45 microsegundos en bajo. 
+
+El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira cercano a 60 mA por LED.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/leds.png}
 	\caption{Conexión en cadena de los dispositivos WS2812B.}
-    \footnote{\url{https://electronics.stackexchange.com}}
+    \footnote{\url{https://lastminuteengineers.com/ws2812b-arduino-tutorial/}}
 	\label{fig:led}
 \end{figure}
 
 
-\subsubsection{Sensor de movimiento}
-El proyecto utiliza sensores infrarrojos de detección de movimiento del tipo PIR (Passive Infrared sensor) modelo HC-SR501. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
+\subsection{Sensor de movimiento PIR}
+El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=5cm, height=5cm]{./Figures/pir2.jpg}
+	\includegraphics[width=4cm, height=4cm]{./Figures/pir2.jpg}
 	\caption{Sensor PIR HC-SR501.}
     \footnote{\url{https://www.hobbytronica.com.ar}}
 	\label{fig:pir}
 \end{figure}
 
 
-\subsubsection{Módulo extensor de puertos}
-También se dispone de un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments, el cual dispone de conexión I\textsuperscript{2}C de 100 kHz con el microcontrolador y la capacidad de direccionar hasta 8 de los mismos. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA.
+\subsection{Módulo extensor de puertos}
+El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/extensorgpio.png}
@@ -62,8 +64,8 @@ También se dispone de un módulo extensor de 8 puertos de entrada que permite l
 \end{figure}
 
 
-\subsubsection{Módulo de comunicación Bluetooth}
-El módulo para la interacción con el usuario que se usa en este trabajo es el HC-05 (en conjunto con la placa de evaluación ZS-040), cuyo protocolo es Bluetooth 2.0. Dispone de una configuración simultanea tanto como maestro y como esclavo y se conecta al microcontrolador a través de interfaz serie, requiriendo una tensión de 5 V y con un consumo de 100 mA.
+\subsection{Módulo de comunicación Bluetooth}
+El módulo para la interacción con el usuario que se usa en este trabajo es el HC-05, en conjunto con la placa de evaluación ZS-040, como se puede observar en la figura \ref{fig:bt}. Su protocolo es Bluetooth 2.0 y permite una configuración simultánea tanto en modo maestro y como esclavo y se conecta al microcontrolador a través de interfaz serie. Requiere una tensión de 5 V y un consumo aproximado de 100 mA.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/BT.jpg}
@@ -73,34 +75,39 @@ El módulo para la interacción con el usuario que se usa en este trabajo es el 
 \end{figure}
 
 
-\subsection{Software}
-En esta sección se mencionan los software, lenguajes de programación y herramientas desarrolladas por terceros utilizados para el desarrollo en este proyecto.
+\section{Software y entorno de desarrollo}
+En esta sección se mencionan los software, lenguajes de programación y herramientas desarrolladas por terceros utilizados para el desarrollo de este trabajo.
 
-\begin{itemize}
-	\item Visual Studio Code es un editor de código fuente gratuito y multiplataforma desarrollado por la empresa Microsoft. Posee un conjunto de extensiones que permite añadir soporte para cualquier lenguaje de programación y depuración.
-	\item STM32 CubeIDE es un entorno de desarrollo integrado (IDE, por sus siglas en inglés) de código abierto para programar microcontroladores y microprocesadores de la familia STM32. Permite configurar periféricos, generar código automáticamente, compilarlo y depurarlo en la misma plataforma Se encuentra basado en el entorno de desarrollo Eclipse. 
-    \item MIT APP Inventor es una plataforma gratuita y en línea para la creación de aplicaciones para dispositivos Android. Desarrollado por el Instituto Tecnológico de Massachusetts, permite a los usuarios no técnicos diseñar y crear aplicaciones funcionales a través de un navegador web.
-    \item Lenguaje de programación C es un lenguaje de programación de propósito general e imperativo que permite el control directo del hardware. Fue creado por Dennis Ritchie y Ken Thompson entre 1969 y 1972 y se caracteriza por su eficiencia, portabilidad y la capacidad de manipular memoria mediante punteros, ideal para sistemas operativos, software embebido y controladores de hardware. 
-    \item Compilador GCC (GNU Compiler Collection) es un conjunto de compiladores creado por el Proyecto GNU y distribuido como software libre que permite compilar código en lenguaje C, C++, Objective-C, Fortran entre otros. Su propósito es tomar un programa escrito en un lenguaje de alto nivel (como C) y transformarlo en un programa ejecutable en lenguaje de máquina.
-    \item Doxigen es una herramienta de generación automática de documentación técnica a partir de los comentarios en el código fuente de lenguajes como C++, C, Java y Python. Analiza el código para extraer y formatear la información en formatos HTML o PDF y permite mantener la documentación sincronizada con el código.
-\end{itemize}
+\subsection{Visual Studio Code}
+Visual Studio Code es un editor de código fuente gratuito y multiplataforma desarrollado por la empresa Microsoft. Posee un conjunto de extensiones que permite añadir soporte para cualquier lenguaje de programación y depuración.
+\subsection{STM32 CubeIDE}
+STM32 CubeIDE es un entorno de desarrollo integrado (IDE, por sus siglas en inglés) de código abierto para programar microcontroladores y microprocesadores de la familia STM32. Permite configurar periféricos, generar código automáticamente, compilarlo y depurarlo en la misma plataforma Se encuentra basado en el entorno de desarrollo Eclipse. 
+\subsection{MIT APP Inventor}
+MIT APP Inventor es una plataforma gratuita y en línea para la creación de aplicaciones para dispositivos Android. Desarrollado por el Instituto Tecnológico de Massachusetts, permite a los usuarios no técnicos diseñar y crear aplicaciones funcionales a través de un navegador web.
+\subsection{Lenguaje de programación C}
+El Lenguaje de programación C es un lenguaje de programación de propósito general e imperativo que permite el control directo del hardware. Fue creado por Dennis Ritchie y Ken Thompson entre 1969 y 1972 y se caracteriza por su eficiencia, portabilidad y la capacidad de manipular memoria mediante punteros, ideal para sistemas operativos, software embebido y controladores de hardware. 
+\subsection{Compilador GCC (GNU Compiler Collection)}
+El Compilador GCC (GNU Compiler Collection) es un conjunto de compiladores creado por el Proyecto GNU y distribuido como software libre que permite compilar código en lenguaje C, C++, Objective-C, Fortran entre otros. Su propósito es tomar un programa escrito en un lenguaje de alto nivel (como C) y transformarlo en un programa ejecutable en lenguaje de máquina.
+\subsection{Doxigen}
+Doxigen es una herramienta de generación automática de documentación técnica a partir de los comentarios en el código fuente de lenguajes como C++, C, Java y Python. Analiza el código para extraer y formatear la información en formatos HTML o PDF y permite mantener la documentación sincronizada con el código.
 
 \section{Protocolos de comunicación}
-El sistema de iluminación desarrollado en esta memoria hace uso de dos protocolos de comunicación para la transferencia de datos entre el microcontrolador y los periféricos mencionados en la subsección \ref{sec:componentes}.
+\label{sec:protocolos}
+El sistema de iluminación desarrollado hace uso de dos protocolos de comunicación para la transferencia de datos entre el microcontrolador y los periféricos mencionados en la sección \ref{sec:componentes}.
 
 \subsection{Protocolo I\textsuperscript{2}C}
-Se emplea el protocolo I\textsuperscript{2}C para la comunicación con el módulo extensor de entradas salidas PCF8574 y el mismo consiste en un bus de comunicación serial síncrono, bidireccional y semidúplex que esta diseñado como un conjunto maestro esclavos, donde la transferencia de dato siempre es iniciada por el maestro, y permite direccionar hasta 128 esclavos. Consta de dos lineas eléctricas, SCL (Serial Clock) y SDA (Serial Data) donde la primera transmite los pulsos de reloj de sincronización y la segunda la cadena de datos.
+Se emplea el protocolo I\textsuperscript{2}C para la comunicación entre el microcontrolador y distintos módulos del sistema. Este protocolo consiste en un bus de comunicación serial síncrono, bidireccional y semidúplex, organizado bajo una arquitectura maestro–esclavo. La transferencia de datos siempre es iniciada por el maestro y permite la conexión de múltiples dispositivos gracias al uso de direcciones de 7 bits, lo que habilita la existencia de hasta 128 esclavos en el mismo bus.
 
-El inicio de una transmisión se produce cuando el maestro envía la señal de inicio, seguida de 7 bits con la dirección del dispositivo esclavo. El siguiente bit en la trama indica si la transacción será de escritura o lectura de datos. Luego el esclavo  confirma la recepción mediante un bit ACK (acknowledge) y a continuación se produce la transferencia de datos. En el caso de escritura, el maestro envía los bytes y el esclavo responde con ACK después de cada uno. Por otro lado, en la lectura el esclavo envía los datos y el maestro confirma con ACK, excepto en el último byte, donde envía un NACK (non-acknowledge) para indicar el fin de la lectura.
-
-La transmisión concluye con la señal de parada. Como alternativa, puede enviarse una señal de reinicio para comenzar una nueva transmisión sin necesidad de emitir la señal de parada anterior. En la figura \ref{fig:ti2c} se puede observar la trama completa empleada por el protocolo.
+El I\textsuperscript{2}C utiliza dos líneas eléctricas: SCL (Serial Clock), encargada de proporcionar los pulsos de sincronización, y SDA (Serial Data), destinada al intercambio de datos. La comunicación se basa en tramas que incluyen la dirección del dispositivo, un bit que indica el tipo de operación y un mecanismo de confirmación mediante señales ACK (acknowledge) y NACK (not acknowledge), lo que asegura una transferencia ordenada y confiable entre los dispositivos conectados. En la figura \ref{fig:ti2c} se puede observar la trama completa empleada por el protocolo.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, height=5cm]{./Figures/i2c.jpg}
+	\includegraphics[width=15cm, height=10cm]{./Figures/i2c.jpg}
 	\caption{Trama I2C.}
     \footnote{\url{https://naylampmechatronics.com/}}
 	\label{fig:ti2c}
 \end{figure}
 
 \subsection{Protocolo UART}
-El sistema Bluetooth de interacción con el usuario que posee el dispositivo se comunica con el microcontrolador mediante UART. Este es un protocolo serie asíncrono que dispone de dos lineas físicas, una de transmisión y otra de recepción, que permite una comunicación simplex(los datos se envían en una sola dirección), semidúplex(cada extremo se comunica, pero solo uno al mismo tiempo), o dúplex completo(ambos extremos pueden transmitir simultáneamente). La trama dispone de un bit de inicio seguido de los datos y finaliza con un bit de parada.
+El sistema Bluetooth utilizado para la interacción con el usuario se comunica con el microcontrolador mediante el protocolo UART. Este protocolo corresponde a una comunicación serie asíncrona que utiliza dos líneas físicas: una de transmisión y otra de recepción. Su estructura permite distintos modos de operación, como comunicación simplex, en la que los datos se envían en una única dirección; comunicación semidúplex, donde ambos extremos pueden comunicarse pero no de manera simultánea; y comunicación dúplex completo, que permite la transmisión y la recepción al mismo tiempo.
+
+La trama utilizada por UART está formada por un bit de inicio, los bits de datos y un bit de parada que indica el fin de la transmisión.
