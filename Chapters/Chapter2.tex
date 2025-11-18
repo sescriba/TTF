@@ -16,7 +16,7 @@ El sistema de iluminación cuenta con un conjunto de componentes necesarios para
 El sistema propuesto incorpora un microcontrolador de 32 bits de la marca STMicrocontroller, modelo F4, basado en el núcleo Arm Cortex-M4\citep{STM32F4} con un frecuencia de trabajo de hasta 180 MHz. Dispone de una unidad de punto flotante de precisión simple y memorias embebidas de alta velocidad, entre ellas 2 Mbytes de memoria Flash y hasta hasta 256 kbytes de SRAM.
 
 Cuenta con un gran número de entradas/salidas, convertidores analógicos-digitales y hasta 12 temporizadores, incluidos dos destinados a modulación por pulsos. Posee además diversas interfaces de comunicación entre las que se destacan UART ({\it{Universal Asynchronous Receiver-Transmitter}}), I\textsuperscript{2}C ({\it{Inter-Integrated Circuit}}), SMBus ({\it{System Management Bus}}) y SPI ({\it{Serial Peripheral Interface}}). Para el desarrollo de este trabajo se da uso a la placa de evaluación Nucleo de la marca STM modelo F429ZI que dispone de todos los periféricos necesarios para el uso del microcontrolador y sus componentes.
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=7cm, height=4cm]{./Figures/nucleo.jpg}
 	\caption{Placa de evaluación Núcleo de STM.}
@@ -33,7 +33,7 @@ Emplea un protocolo de comunicación NZR de un solo cable. El puerto de entrada 
 
 El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira cercano a 60 mA por LED.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/leds.png}
 	\caption{Conexión en cadena de los dispositivos WS2812B.}
@@ -43,8 +43,8 @@ El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de l
 
 
 \subsection{Sensor de movimiento PIR}
-El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501\citep{PIR}. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
-\begin{figure}[H]
+El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=4cm, height=4cm]{./Figures/pir2.jpg}
 	\caption{Sensor PIR HC-SR501.}
@@ -54,8 +54,8 @@ El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR
 
 
 \subsection{Módulo extensor de puertos}
-El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments\citep{EXTENSOR}, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
-\begin{figure}[H]
+El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/extensorgpio.png}
 	\caption{Extensor multipropósito PCF8574.}
@@ -65,8 +65,8 @@ El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la 
 
 
 \subsection{Módulo de comunicación Bluetooth}
-El módulo para la interacción con el usuario que se usa en este trabajo es el HC-05, en conjunto con la placa de evaluación ZS-040\citep{BT}, como se puede observar en la figura \ref{fig:bt}. Su protocolo es Bluetooth 2.0 y permite una configuración simultánea tanto en modo maestro y como esclavo y se conecta al microcontrolador a través de interfaz serie. Requiere una tensión de 5 V y un consumo aproximado de 100 mA.
-\begin{figure}[H]
+El módulo para la interacción con el usuario que se usa en este trabajo es el HC-05, en conjunto con la placa de evaluación ZS-040, como se puede observar en la figura \ref{fig:bt}. Su protocolo es Bluetooth 2.0 y permite una configuración simultánea tanto en modo maestro y como esclavo y se conecta al microcontrolador a través de interfaz serie. Requiere una tensión de 5 V y un consumo aproximado de 100 mA.
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/BT.jpg}
 	\caption{Módulo Bluetooth HC-05 montado sobre ZS-040.}
@@ -99,7 +99,7 @@ El sistema de iluminación desarrollado hace uso de dos protocolos de comunicaci
 Se emplea el protocolo I\textsuperscript{2}C para la comunicación entre el microcontrolador y distintos módulos del sistema. Este protocolo consiste en un bus de comunicación serial síncrono, bidireccional y semidúplex, organizado bajo una arquitectura maestro–esclavo. La transferencia de datos siempre es iniciada por el maestro y permite la conexión de múltiples dispositivos gracias al uso de direcciones de 7 bits, lo que habilita la existencia de hasta 128 esclavos en el mismo bus.
 
 El I\textsuperscript{2}C utiliza dos líneas eléctricas: SCL (Serial Clock), encargada de proporcionar los pulsos de sincronización, y SDA (Serial Data), destinada al intercambio de datos. La comunicación se basa en tramas que incluyen la dirección del dispositivo, un bit que indica el tipo de operación y un mecanismo de confirmación mediante señales ACK (acknowledge) y NACK (not acknowledge), lo que asegura una transferencia ordenada y confiable entre los dispositivos conectados. En la figura \ref{fig:ti2c} se puede observar la trama completa empleada por el protocolo.
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=15cm, height=10cm]{./Figures/i2c.jpg}
 	\caption{Trama I2C.}
