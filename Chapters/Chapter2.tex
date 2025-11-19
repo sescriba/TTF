@@ -13,7 +13,7 @@ En este capítulo se describen los componentes, software y programas de terceros
 El sistema de iluminación cuenta con un conjunto de componentes necesarios para su funcionamiento, que van desde lenguajes de programación hasta pequeños componentes electrónicos. A continuación se hace mención a cada uno de ellos con una breve descripción. 
 
 \subsection{Microcontrolador STM32F4}
-El sistema propuesto incorpora un microcontrolador de 32 bits de la marca STMicrocontroller, modelo F4, basado en el núcleo Arm Cortex-M4\citep{STM32F4} con un frecuencia de trabajo de hasta 180 MHz. Dispone de una unidad de punto flotante de precisión simple y memorias embebidas de alta velocidad, entre ellas 2 Mbytes de memoria Flash y hasta hasta 256 kbytes de SRAM.
+El sistema propuesto incorpora un microcontrolador de 32 bits de la marca STMicrocontroller, modelo F4, basado en el núcleo Arm Cortex-M4 \citep{STM32F4} con un frecuencia de trabajo de hasta 180 MHz. Dispone de una unidad de punto flotante de precisión simple y memorias embebidas de alta velocidad, entre ellas 2 Mbytes de memoria Flash y hasta hasta 256 kbytes de SRAM.
 
 Cuenta con un gran número de entradas/salidas, convertidores analógicos-digitales y hasta 12 temporizadores, incluidos dos destinados a modulación por pulsos. Posee además diversas interfaces de comunicación entre las que se destacan UART ({\it{Universal Asynchronous Receiver-Transmitter}}), I\textsuperscript{2}C ({\it{Inter-Integrated Circuit}}), SMBus ({\it{System Management Bus}}) y SPI ({\it{Serial Peripheral Interface}}). Para el desarrollo de este trabajo se da uso a la placa de evaluación Nucleo de la marca STM modelo F429ZI que dispone de todos los periféricos necesarios para el uso del microcontrolador y sus componentes.
 \begin{figure}[H]
@@ -25,7 +25,7 @@ Cuenta con un gran número de entradas/salidas, convertidores analógicos-digita
 \footnotetext{\url{https://www.distrelec.ch/en/stm32-nucleo-board-2mb-256kb-st-nucleo-f429zi/p/30176552}}
 
 \subsection{Tira LED pixel}
-Para el desarrollo del sistema de iluminación se utiliza una tira LED del tipo pixel. Está formada por conjuntos de tres diodos emisores de luz, uno para cada color primario RGB, con un controlador modelo WS2812B\citep{LEDPIXEL} conectado en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal y un oscilador interno de alta precisión.
+Para el desarrollo del sistema de iluminación se utiliza una tira LED del tipo pixel. Está formada por conjuntos de tres diodos emisores de luz, uno para cada color primario RGB, con un controlador modelo WS2812B \citep{LEDPIXEL} conectado en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal y un oscilador interno de alta precisión.
 
 Emplea un protocolo de comunicación NZR de un solo cable. El puerto de entrada recibe los datos enviados por el microcontrolador, los almacena en un registro interno y los transfiere por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}. El dato está compuesto por 24 pulsos, ocho por cada color. Un cero lógico debe estar formado por 0,4 microsegundos en alto y 0,85 microsegundos en bajo, mientras que un uno lógico corresponde a 0,8 microsegundos en alto y 0,45 microsegundos en bajo. 
 
@@ -41,7 +41,7 @@ El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de l
 
 
 \subsection{Sensor de movimiento PIR}
-El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
+El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501 \citep{PIR}. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=4cm, height=4cm]{./Figures/pir2.jpg}
@@ -51,7 +51,7 @@ El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR
 \footnotetext{\url{https://www.hobbytronica.com.ar}}
 
 \subsection{Módulo extensor de puertos}
-El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
+El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments \citep{EXTENSOR}, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/extensorgpio.png}
@@ -74,24 +74,24 @@ El módulo para la interacción con el usuario que se usa en este trabajo es el 
 En esta sección se mencionan los software, lenguajes de programación y herramientas desarrolladas por terceros utilizados para el desarrollo de este trabajo.
 
 \subsection{Visual Studio Code}
-Visual Studio Code\citep{VSCODE} es un editor de código fuente gratuito y multiplataforma desarrollado por la empresa Microsoft. Posee un conjunto de extensiones que permite añadir soporte para cualquier lenguaje de programación y depuración.
+Visual Studio Code \citep{VSCODE} es un editor de código fuente gratuito y multiplataforma desarrollado por la empresa Microsoft. Posee un conjunto de extensiones que permite añadir soporte para cualquier lenguaje de programación y depuración.
 \subsection{STM32 CubeIDE}
-STM32 CubeIDE\citep{STM32CUBE} es un entorno de desarrollo integrado (IDE, por sus siglas en inglés) de código abierto para programar microcontroladores y microprocesadores de la familia STM32. Permite configurar periféricos, generar código automáticamente, compilarlo y depurarlo en la misma plataforma Se encuentra basado en el entorno de desarrollo Eclipse. 
+STM32 CubeIDE \citep{STM32CUBE} es un entorno de desarrollo integrado (IDE, por sus siglas en inglés) de código abierto para programar microcontroladores y microprocesadores de la familia STM32. Permite configurar periféricos, generar código automáticamente, compilarlo y depurarlo en la misma plataforma Se encuentra basado en el entorno de desarrollo Eclipse. 
 \subsection{MIT APP Inventor}
-MIT APP Inventor\citep{MITAPP} es una plataforma gratuita y en línea para la creación de aplicaciones para dispositivos Android. Desarrollado por el Instituto Tecnológico de Massachusetts, permite a los usuarios no técnicos diseñar y crear aplicaciones funcionales a través de un navegador web.
+MIT APP Inventor \citep{MITAPP} es una plataforma gratuita y en línea para la creación de aplicaciones para dispositivos Android. Desarrollado por el Instituto Tecnológico de Massachusetts, permite a los usuarios no técnicos diseñar y crear aplicaciones funcionales a través de un navegador web.
 \subsection{Lenguaje de programación C}
-El Lenguaje de programación C\citep{C} es un lenguaje de programación de propósito general e imperativo que permite el control directo del hardware. Fue creado por Dennis Ritchie y Ken Thompson entre 1969 y 1972 y se caracteriza por su eficiencia, portabilidad y la capacidad de manipular memoria mediante punteros, ideal para sistemas operativos, software embebido y controladores de hardware. 
+El Lenguaje de programación C \citep{C} es un lenguaje de programación de propósito general e imperativo que permite el control directo del hardware. Fue creado por Dennis Ritchie y Ken Thompson entre 1969 y 1972 y se caracteriza por su eficiencia, portabilidad y la capacidad de manipular memoria mediante punteros, ideal para sistemas operativos, software embebido y controladores de hardware. 
 \subsection{Compilador GCC (GNU Compiler Collection)}
-El Compilador GCC (GNU Compiler Collection)\citep{GCC} es un conjunto de compiladores creado por el Proyecto GNU y distribuido como software libre que permite compilar código en lenguaje C, C++, Objective-C, Fortran entre otros. Su propósito es tomar un programa escrito en un lenguaje de alto nivel (como C) y transformarlo en un programa ejecutable en lenguaje de máquina.
+El Compilador GCC (GNU Compiler Collection) \citep{GCC} es un conjunto de compiladores creado por el Proyecto GNU y distribuido como software libre que permite compilar código en lenguaje C, C++, Objective-C, Fortran entre otros. Su propósito es tomar un programa escrito en un lenguaje de alto nivel (como C) y transformarlo en un programa ejecutable en lenguaje de máquina.
 \subsection{Doxigen}
-Doxigen\citep{DOXI} es una herramienta de generación automática de documentación técnica a partir de los comentarios en el código fuente de lenguajes como C++, C, Java y Python. Analiza el código para extraer y formatear la información en formatos \texttt{HTML} o \texttt{PDF} y permite mantener la documentación sincronizada con el código.
+Doxigen \citep{DOXI} es una herramienta de generación automática de documentación técnica a partir de los comentarios en el código fuente de lenguajes como C++, C, Java y Python. Analiza el código para extraer y formatear la información en formatos \texttt{HTML} o \texttt{PDF} y permite mantener la documentación sincronizada con el código.
 
 \section{Protocolos de comunicación}
 \label{sec:protocolos}
 El sistema de iluminación desarrollado hace uso de dos protocolos de comunicación para la transferencia de datos entre el microcontrolador y los periféricos mencionados en la sección \ref{sec:componentes}.
 
-\subsection{Protocolo I\textsuperscript{2}C\citep{I2C}}
-Se emplea el protocolo I\textsuperscript{2}C para la comunicación entre el microcontrolador y distintos módulos del sistema. Este protocolo consiste en un bus de comunicación serial síncrono, bidireccional y semidúplex, organizado bajo una arquitectura maestro–esclavo. La transferencia de datos siempre es iniciada por el maestro y permite la conexión de múltiples dispositivos gracias al uso de direcciones de 7 bits, lo que habilita la existencia de hasta 128 esclavos en el mismo bus.
+\subsection{Protocolo I\textsuperscript{2}C}
+Se emplea el protocolo I\textsuperscript{2}C \citep{I2C} para la comunicación entre el microcontrolador y distintos módulos del sistema. Este protocolo consiste en un bus de comunicación serial síncrono, bidireccional y semidúplex, organizado bajo una arquitectura maestro–esclavo. La transferencia de datos siempre es iniciada por el maestro y permite la conexión de múltiples dispositivos gracias al uso de direcciones de 7 bits, lo que habilita la existencia de hasta 128 esclavos en el mismo bus.
 
 El I\textsuperscript{2}C utiliza dos líneas eléctricas: SCL (Serial Clock), encargada de proporcionar los pulsos de sincronización, y SDA (Serial Data), destinada al intercambio de datos. La comunicación se basa en tramas que incluyen la dirección del dispositivo, un bit que indica el tipo de operación y un mecanismo de confirmación mediante señales ACK (acknowledge) y NACK (not acknowledge), lo que asegura una transferencia ordenada y confiable entre los dispositivos conectados. En la figura \ref{fig:ti2c} se puede observar la trama completa empleada por el protocolo.
 \begin{figure}[H]
@@ -102,7 +102,7 @@ El I\textsuperscript{2}C utiliza dos líneas eléctricas: SCL (Serial Clock), en
 \end{figure}
 \footnotetext{\url{https://naylampmechatronics.com/}}
 
-\subsection{Protocolo UART\citep{UART}}
-El sistema Bluetooth utilizado para la interacción con el usuario se comunica con el microcontrolador mediante el protocolo UART. Este protocolo corresponde a una comunicación serie asíncrona que utiliza dos líneas físicas: una de transmisión y otra de recepción. Su estructura permite distintos modos de operación, como comunicación simplex, en la que los datos se envían en una única dirección; comunicación semidúplex, donde ambos extremos pueden comunicarse pero no de manera simultánea; y comunicación dúplex completo, que permite la transmisión y la recepción al mismo tiempo.
+\subsection{Protocolo UART}
+El sistema Bluetooth utilizado para la interacción con el usuario se comunica con el microcontrolador mediante el protocolo UART \citep{UART}. Este protocolo corresponde a una comunicación serie asíncrona que utiliza dos líneas físicas: una de transmisión y otra de recepción. Su estructura permite distintos modos de operación, como comunicación simplex, en la que los datos se envían en una única dirección; comunicación semidúplex, donde ambos extremos pueden comunicarse pero no de manera simultánea; y comunicación dúplex completo, que permite la transmisión y la recepción al mismo tiempo.
 
 La trama utilizada por UART está formada por un bit de inicio, los bits de datos y un bit de parada que indica el fin de la transmisión.
