@@ -19,7 +19,7 @@ Cuenta con un gran número de entradas/salidas, convertidores analógicos-digita
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=7cm, height=4cm]{./Figures/nucleo.jpg}
-	\caption{Placa de evaluación Núcleo de STM.\protect\footnotemark}
+	\caption{Placa de evaluación Nucleo de STM.\protect\footnotemark}
 	\label{fig:nucleo}
 \end{figure}
 \footnotetext{\url{https://www.distrelec.ch/en/stm32-nucleo-board-2mb-256kb-st-nucleo-f429zi/p/30176552}}
@@ -30,15 +30,13 @@ Para el desarrollo del sistema de iluminación se utiliza una tira LED del tipo 
 Emplea un protocolo de comunicación NZR de un solo cable. El puerto de entrada recibe los datos enviados por el microcontrolador, los almacena en un registro interno y los transfiere por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}. El dato está compuesto por 24 pulsos, ocho por cada color. Un cero lógico debe estar formado por 0,4 microsegundos en alto y 0,85 microsegundos en bajo, mientras que un uno lógico corresponde a 0,8 microsegundos en alto y 0,45 microsegundos en bajo. 
 
 El voltaje de trabajo es de 5 V y el consumo depende de la cantidad de LEDs de la tira cercano a 60 mA por LED.
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=5cm, height=5cm]{./Figures/leds.png}
+	\includegraphics[width=3cm, height=3cm]{./Figures/leds.png}
 	\caption{Conexión en cadena de los dispositivos WS2812B.\protect\footnotemark}
 	\label{fig:led}
 \end{figure}
 \footnotetext{\url{https://lastminuteengineers.com/ws2812b-arduino-tutorial/}}
-
 
 \subsection{Sensor de movimiento PIR}
 El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR ({\it{Passive Infrared Sensor}}) modelo HC-SR501 \citep{PIR}. Este dispositivo detecta la variación de la radiación infrarroja emitida por un cuerpo y, mediante un controlador, envía un pulso digital por su canal de comunicación. Como se observa en la figura \ref{fig:pir}, dispone de dos potenciómetros para ajustar la sensibilidad y el tiempo de retardo. Su tensión de trabajo es de entre 5 V y 20 V con un consumo promedio de 65 mA.
@@ -64,7 +62,7 @@ El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la 
 El módulo para la interacción con el usuario que se usa en este trabajo es el HC-05, en conjunto con la placa de evaluación ZS-040, como se puede observar en la figura \ref{fig:bt}. Su protocolo es Bluetooth 2.0 y permite una configuración simultánea tanto en modo maestro y como esclavo y se conecta al microcontrolador a través de interfaz serie. Requiere una tensión de 5 V y un consumo aproximado de 100 mA.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=5cm, height=5cm]{./Figures/BT.jpg}
+	\includegraphics[width=4cm, height=4cm]{./Figures/BT.jpg}
 	\caption{Módulo Bluetooth HC-05 montado sobre ZS-040.\protect\footnotemark}
 	\label{fig:bt}
 \end{figure}
@@ -96,7 +94,7 @@ Se emplea el protocolo I\textsuperscript{2}C \citep{I2C} para la comunicación e
 El I\textsuperscript{2}C utiliza dos líneas eléctricas: SCL (Serial Clock), encargada de proporcionar los pulsos de sincronización, y SDA (Serial Data), destinada al intercambio de datos. La comunicación se basa en tramas que incluyen la dirección del dispositivo, un bit que indica el tipo de operación y un mecanismo de confirmación mediante señales ACK (acknowledge) y NACK (not acknowledge), lo que asegura una transferencia ordenada y confiable entre los dispositivos conectados. En la figura \ref{fig:ti2c} se puede observar la trama completa empleada por el protocolo.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm, height=10cm]{./Figures/i2c.jpg}
+	\includegraphics[width=10cm, height=7cm]{./Figures/i2c.jpg}
 	\caption{Trama I2C.\protect\footnotemark}
 	\label{fig:ti2c}
 \end{figure}

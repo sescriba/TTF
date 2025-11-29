@@ -2,7 +2,7 @@
 
 \label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-En este capítulo se busca informar al lector acerca del diseño del producto y como fue implementada su arquitectura. Para ello se hace uso de diagramas de bloques y de flujo de información.
+En este capítulo se expone el diseño del producto y la implementación de su arquitectura. Se describen los elementos que lo componen y la organización interna del sistema. Para ello se utilizan diagramas de bloques y de flujo de información, que permiten visualizar la estructura general y comprender cómo se articula cada componente dentro del conjunto.
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -45,7 +45,7 @@ En este capítulo se busca informar al lector acerca del diseño del producto y 
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 \section{Diseño del sistema}
-Esta sección analiza el diseño del sistema de iluminación, la conectividad entre los diferentes componentes y la interacción entre los mismos. El diagrama de la figura \ref{fig:bloques} muestra en bloques la composición del producto diferenciando en un conjunto de módulos primarios: control, comunicación con el usuario y de ingreso y egreso de señales. También se puede observar como cada bloque interactúa con los demás y el flujo de la información.
+Esta sección analiza el diseño del sistema de iluminación, la conectividad entre los diferentes componentes y la interacción entre ellos. El diagrama de la figura \ref{fig:bloques} presenta, en forma de bloques, la composición del producto diferenciada en un conjunto de módulos primarios: control, comunicación con el usuario y de ingreso y egreso de señales. También permite visualizar cómo interactúa cada bloque con los demás y el flujo de información entre ellos.
 
 \begin{figure}[h]
 	\centering
@@ -54,16 +54,16 @@ Esta sección analiza el diseño del sistema de iluminación, la conectividad en
 	\label{fig:bloques}
 \end{figure}
 
-El bloque central del sistema es el de control. Está compuesto por el microcontrolador y es el encargado del procesamiento de las señales de ingreso y la generación de las señales de salida y maneja la comunicación con los diferentes sensores a partir de los protocolos mencionados en la sección \ref{sec:protocolos}. También es el encargado de almacenar, en la memoria interna, toda información relativa a la configuración de hardware del producto.
+El bloque central del sistema es el de control. Está compuesto por el microcontrolador y se encarga del procesamiento de las señales de ingreso, de la generación de las señales de salida y de la comunicación con los diferentes sensores mediante los protocolos mencionados en la sección \ref{sec:protocolos}. También admnistra el almacenamiento, en la memoria interna, de toda la información vinculada a la configuración de hardware del producto.
 
-Por otro lado, el bloque de comunicación con el usuario esta compuesto por el módulo Bluetooth, quien permite una interacción bidireccional. Así el consumidor puede enviar comandos específicos de configuración del hardware y, a su vez, comandos de control de encendido, brillo o color. Este bloque se conecta al microcontrolador mediante protocolo UART.
+Por otro lado, el bloque de comunicación con el usuario está compuesto por el módulo Bluetooth, que permite una interacción bidireccional. De este modo, el usuario puede enviar comandos específicos de configuración del hardware y, además, realizar acciones de control como encendido, ajuste de brillo o selección de color. Este bloque se conecta al microcontrolador mediante protocolo UART.
 
-Finalmente, el bloque de señales se divide en dos submódulos, uno de ingreso de información al sistema y otro de respuesta. El ingreso de información está compuesto por señales binarias captadas por los sensores digitales de movimiento PIR, que detectan el movimiento escalón por escalón. Si bien podrían ir conectados al microcontrolador directamente utilizando los puertos destinados para tal fin, se decide utilizar extensores de puertos que se comunican al módulo de control mediante protocolo I\textsuperscript{2}C. Una vez captado y procesado los datos, se genera la señal de egreso, necesaria por los LEDs pixel de la tira. Así, utilizando del módulo PWM del microcontrolador, se produce una serie de pulsos binarios de diferentes ciclos de trabajo y a una frecuencia de 800 kHz, respetando las especificaciones técnicas del controlador de los LEDs.
+Finalmente, el bloque de señales se divide en dos submódulos: uno de ingreso de información al sistema y otro de respuesta. El ingreso está conformado por señales binarias provenientes de los sensores digitales de movimiento PIR, que detectan el desplazamiento escalón por escalón. Si bien estos sensores podrían conectarse directamente al microcontrolador mediante sus puertos específicos, se optó por utilizar extensores de puertos que se comunican con el módulo de control a través del protocolo I\textsuperscript{2}C. Una vez captados y procesados los datos, se genera la señal de egreso, necesaria por los LEDs pixel de la tira. Para ello, el módulo PWM del microcontrolador produce una serie de pulsos binarios con diferentes ciclos de trabajo y una frecuencia de 800 kHz, en cumplimiento de las especificaciones técnicas del controlador de los LEDs.
 
 \section{Análisis del potencia}
-Si bien el sistema de iluminación desarrollado en este trabajo es un prototipo funcional, este debe responder a los requisitos mínimos de tensión y corriente para que funcione dentro de los parámetros esperados. En primer lugar cabe destacar que el hardware fue pensado para iluminar cuatro escalones de un metro de ancho, necesitando de los componentes listados a continuación y ya descriptos en el capítulo \ref{Chapter2}.
+Si bien el sistema de iluminación desarrollado en este trabajo constituye un prototipo funcional, este debe cumplir con los requisitos mínimos de tensión y corriente para operar dentro de los parámetros esperados. En primer lugar, cabe destacar que el hardware fue diseñado para iluminar cuatro escalones de un metro de ancho, utilizando de los componentes listados a continuación y ya descriptos en el capítulo \ref{Chapter2}.
 \begin{itemize}
-    \item Una placa de evaluación STM32 Núcleo F429ZI.
+    \item Una placa de evaluación STM32 Nucleo F429ZI.
     \item Cuatro metros de tira LED pixel WS2812B.
     \item Cuatro sensores de movimiento PIR HC-SR501.
     \item Un módulo Bluetooth HC-05 sobre placa de evaluación ZS-040.
@@ -71,11 +71,11 @@ Si bien el sistema de iluminación desarrollado en este trabajo es un prototipo 
     \item Una protoboard, cables, transistores y resistencias.
 \end{itemize}
 
-De acuerdo a las diferentes hojas de datos todos los productos mencionados poseen un voltaje de trabajo de 5 V, por lo que puede utilizarse la misma fuente de energía para todos ellos. Sin embargo, la potencia varia significativamente, siendo la tira LED quien requiere la mayor cantidad de energía del sistema. Cada LED de la tira consume un máximo aproximado de 60 mA y, considerando que la tira posee 60 LEDs por metro, se requiere de 3,6 A (o 18 W) por escalón.
+De acuerdo a las diferentes hojas de datos todos los componentes mencionados trabajan a 5 V, por lo que puede utilizarse la misma fuente de energía para todos ellos. Sin embargo, la potencia difiere significativamente, siendo la tira LED el elemento de mayor demanda energética. Cada LED de la tira consume un máximo aproximado de 60 mA y, considerando que cada metro contiene 60 LED, la potencia requerida asciende a 3,6 A (o 18 W) por escalón.
 
-Por otro lado, el microcontrolador especifica un consumo de 260 uA/MHz que, para 180 MHz, implica una potencia de 240 mA. En tanto a los sensor PIR, su hoja de datos especifica un requisito de potencia de 300 mW, mientras que los extensores de puertos requieren 500 mW. El módulo Bluetooth, considerando que ya su placa de evaluación, requiere un valor máximo de 200 mW de consumo. Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. 
+En cuanto al microcontrolador, su hoja de datos indica un consumo de 260 µA/MHz, lo que para una operación a 180 MHz implica un consumo cercano a 240 mA. Los sensores PIR requieren 300 mW cada uno, mientras que los extensores de puertos demandan alrededor de 500 mW. El módulo Bluetooth, considerando su placa de evaluación, especifica un consumo máximo de 200 mW. 
 
-Cabe destacar que el 97\% del consumo total del sistema recae en la iluminación de la escalera, por lo que 
+Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. Cabe destacar que el 97\% del consumo total recae en la iluminación de la escalera, por lo que se dispone de una única fuente de energía que responda a las necesidades expuestas anteriormente, para todos los elementos del sistema.
 
 \section{Análisis del software}
  
