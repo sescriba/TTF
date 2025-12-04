@@ -45,6 +45,7 @@ En este capítulo se expone el diseño del producto y la implementación de su a
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 \section{Diseño del sistema}
+\label{sec:diseno}
 Esta sección analiza el diseño del sistema de iluminación, la conectividad entre los diferentes componentes y la interacción entre ellos. El diagrama de la figura \ref{fig:bloques} presenta, en forma de bloques, la composición del producto diferenciada en un conjunto de módulos primarios: control, comunicación con el usuario y de ingreso y egreso de señales. También permite visualizar cómo interactúa cada bloque con los demás y el flujo de información entre ellos.
 
 \begin{figure}[h]
@@ -76,6 +77,22 @@ De acuerdo a las diferentes hojas de datos todos los componentes mencionados tra
 En cuanto al microcontrolador, su hoja de datos indica un consumo de 260 µA/MHz, lo que para una operación a 180 MHz implica un consumo cercano a 240 mA. Los sensores PIR requieren 300 mW cada uno, mientras que los extensores de puertos demandan alrededor de 500 mW. El módulo Bluetooth, considerando su placa de evaluación, especifica un consumo máximo de 200 mW. 
 
 Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. Cabe destacar que el 97\% del consumo total recae en la iluminación de la escalera, por lo que se dispone de una única fuente de energía que responda a las necesidades expuestas anteriormente, para todos los elementos del sistema.
+
+\section{Diseño y análisis del software}
+De acuerdo a la sección \ref{sec:diseno}, el bloque de control esta compuesto por un microcontrolador que posee un software especifico para la aplicación de iluminación. En esta sección se habla de su diseño y se analizan sus componentes principales, dividiendo al mismo en diferentes módulos de implementación.
+
+El software posee un sistema operativo en tiempo real (RTOS, del ingles {\it{Real Time Operating System}}) donde se ejecuta una tarea principal que inicializa el sistema operativo y dos tareas secundarias: una de control y procesamiento de datos y ejecución de comandos, y otra captación de datos. Dadas las características de un RTOS, las tareas se ejecutan en pseudo-simultaneidad con igual prioridad, incrementando la velocidad de ejecución del sistema.
+
+\subsection{Tarea de control}
+Esta tarea presenta una máquina de estados secuencial encargada del flujo del código de acuerdo a condiciones variables o preexistentes. En la siguiente lista se enumeran los diferentes estados:
+\begin{itemize}
+    \item {\it{SMPoweredDown}}: la máquina de estados se encuentra previamente apagada. Aquí se inicializan los periféricos, se encienden las fuentes de alimentación y se habilita la tarea de captación de datos.
+    \item {\it{SMPoweredUp}}: la maquina de estados se encuentra previamente encendida. Aquí se le asigna una condición de encendido al controlador de luces del sistema.
+    \item {\it{Run}}: es el estado central de la máquina de estados. Aquí se procesan los datos recibidos y se ejecutan los comandos de asignación de condición sobre la iluminación.
+    \item {\it{Stop}}: en caso de error o de apagado forzado, aquí se apaga el controlador de luces dejando en estado de reposo.
+    \item {\it{ModulePoweredDown}}: el controlador de luces se encuentra previamente apagado. Aquí se apaga la máquina de estados, incluyendo periféricos y comunicación.
+\end{itemize}
+
 
 \section{Análisis del software}
  
