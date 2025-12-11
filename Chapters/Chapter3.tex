@@ -62,7 +62,7 @@ Por otro lado, el bloque de comunicación con el usuario está compuesto por el 
 Finalmente, el bloque de señales se divide en dos submódulos: uno de ingreso de información al sistema y otro de respuesta. El ingreso está conformado por señales binarias provenientes de los sensores digitales de movimiento PIR, que detectan el desplazamiento escalón por escalón. Si bien estos sensores podrían conectarse directamente al microcontrolador mediante sus puertos específicos, se optó por utilizar extensores de puertos que se comunican con el módulo de control a través del protocolo I\textsuperscript{2}C. Una vez captados y procesados los datos, se genera la señal de egreso, necesaria por los LEDs pixel de la tira. Para ello, el módulo PWM del microcontrolador produce una serie de pulsos binarios con diferentes ciclos de trabajo y una frecuencia de 800 kHz, en cumplimiento de las especificaciones técnicas del controlador de los LEDs.
 
 \section{Análisis del potencia}
-Si bien el sistema de iluminación desarrollado en este trabajo constituye un prototipo funcional, este debe cumplir con los requisitos mínimos de tensión y corriente para operar dentro de los parámetros esperados. En primer lugar, cabe destacar que el hardware fue diseñado para iluminar cuatro escalones de un metro de ancho, utilizando de los componentes listados a continuación y ya descriptos en el capítulo \ref{Chapter2}.
+Si bien el sistema de iluminación desarrollado en este trabajo constituye un prototipo funcional, este debe cumplir con los requisitos mínimos de tensión y corriente para operar dentro de los parámetros esperados. En primer lugar, cabe destacar que el hardware fue diseñado para iluminar cuatro escalones de un metro de ancho, utilizando los componentes listados a continuación y ya descriptos en el capítulo \ref{Chapter2}.
 \begin{itemize}
     \item Una placa de evaluación STM32 Nucleo F429ZI.
     \item Cuatro metros de tira LED pixel WS2812B.
@@ -79,66 +79,50 @@ En cuanto al microcontrolador, su hoja de datos indica un consumo de 260 µA/MHz
 Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. Cabe destacar que el 97\% del consumo total recae en la iluminación de la escalera, por lo que se dispone de una única fuente de energía que responda a las necesidades expuestas anteriormente, para todos los elementos del sistema.
 
 \section{Diseño y análisis del software}
-De acuerdo a la sección \ref{sec:diseno}, el bloque de control esta compuesto por un microcontrolador que posee un software especifico para la aplicación de iluminación. En esta sección se habla de su diseño y se analizan sus componentes principales, dividiendo al mismo en diferentes módulos de implementación.
+De acuerdo a la sección \ref{sec:diseno}, el bloque de control está compuesto por un microcontrolador que posee un software especifico para la aplicación de iluminación. En esta sección se habla de su diseño y se analizan sus componentes principales, diviéndolo en diferentes módulos de implementación.
 
-El software posee un sistema operativo en tiempo real (RTOS, del ingles {\it{Real Time Operating System}}) donde se ejecuta una tarea principal que inicializa el sistema operativo y dos tareas secundarias: una de control y procesamiento de datos y ejecución de comandos, y otra captación de datos. Dadas las características de un RTOS, las tareas se ejecutan en pseudo-simultaneidad con igual prioridad, incrementando la velocidad de ejecución del sistema.
+El software utiliza un sistema operativo en tiempo real (RTOS, del inglés {it{Real-Time Operating System}}) en el que se ejecuta una tarea principal, encargada de inicializar el sistema operativo, y dos tareas secundarias: una destinada al control, procesamiento de datos y ejecución de comandos, y otra orientada a la captación de datos. Gracias a las características propias de un RTOS, estas tareas se ejecutan de manera pseudosimultánea y con igual prioridad, lo que incrementa la velocidad y la eficiencia del sistema.
 
 \subsection{Tarea de control}
 Esta tarea presenta una máquina de estados secuencial encargada del flujo del código de acuerdo a condiciones variables o preexistentes. En la siguiente lista se enumeran los diferentes estados:
 \begin{itemize}
-    \item {\it{SMPoweredDown}}: la máquina de estados se encuentra previamente apagada. Aquí se inicializan los periféricos, se encienden las fuentes de alimentación y se habilita la tarea de captación de datos.
-    \item {\it{SMPoweredUp}}: la maquina de estados se encuentra previamente encendida. Aquí se le asigna una condición de encendido al controlador de luces del sistema.
-    \item {\it{Run}}: es el estado central de la máquina de estados. Aquí se procesan los datos recibidos y se ejecutan los comandos de asignación de condición sobre la iluminación.
-    \item {\it{Stop}}: en caso de error o de apagado forzado, aquí se apaga el controlador de luces dejando en estado de reposo.
-    \item {\it{ModulePoweredDown}}: el controlador de luces se encuentra previamente apagado. Aquí se apaga la máquina de estados, incluyendo periféricos y comunicación.
+    \item {\texttt{SMPoweredDown}}: la máquina de estados se encuentra previamente apagada. Aquí se inicializan los periféricos, se encienden las fuentes de alimentación y se habilita la tarea de captación de datos.
+    \item {\texttt{SMPoweredUp}}: la máquina de estados se encuentra previamente encendida. Aquí se le asigna una condición de encendido al controlador de luces del sistema.
+    \item {\texttt{SMRun}}: es el estado central de la máquina de estados. Aquí se procesan los datos recibidos y se ejecutan los comandos de asignación de condición sobre la iluminación.
+    \item {\texttt{SMStop}}: en caso de error o de apagado forzado, aquí se apaga el controlador de luces dejando en estado de reposo.
+    \item {\texttt{SMModulePoweredDown}}: el controlador de luces se encuentra previamente apagado. Aquí se apaga la máquina de estados, incluyendo periféricos y comunicación.
 \end{itemize}
 
+Cada uno de estos estados tienen condiciones de ingreso que deben cumplirse para su ejecución y condiciones de escape que determinan su salida. En la figura \ref{fig:maqestados} se pueden observar las diferentes condiciones y el flujo general del sistema.
 
-\section{Análisis del software}
- 
-La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones que se hayan tomado.
+El proceso de inicialización de la máquinas de estados consiste en inicializar la tarea de captación de datos y  configurar los diferentes periféricos del microcontrolador. En esta etapa se establece la comunicación I\textsuperscript{2}C y UART, se configura el timer utilizado para la generación de la señal PWM y se definen los puertos de entrada y salida destinados al control de las fuentes de alimentación. Luego se inicia un proceso de activación de periféricos. 
 
-Se puede agregar código o pseudocódigo dentro de un entorno lstlisting con el siguiente código:
+Estos periféricos se organizan en un listado de dispositivos, cada uno asociado a un valor numérico específico. Este valor está compuesto por 32 bits: los primeros 8 bits representan el protocolo de comunicación asignado, los siguientes 8 bits corresponden a un identificador único dentro de ese protocolo, los 8 bits posteriores almacenan la dirección del dispositivo y los últimos 8 bits definen un identificador único a nivel de sistema. A partir de esta lista de códigos se itera sobre cada periférico, inicializando una estructura de datos con los valores relevantes para su control. Se extraen el protocolo e identificador y se asignan banderas de estado (listo o no para comunicación) y de inicialización. Este mecanismo permite extrapolar el firmware a una cantidad variable de dispositivos conectados, brindando flexibilidad en el número de escalones a iluminar.
 
-\begin{verbatim}
-\begin{lstlisting}[caption= "un epígrafe descriptivo"]
-	las líneas de código irían aquí...
-\end{lstlisting}
-\end{verbatim}
+Una vez inicializado el sistema, se habilita la alimentación de los LEDs desde un pin de salida y se inicia la tarea de captación de datos. Finalmente, la iluminación se enciende con una configuración por defecto. Si no se detectan errores, el sistema entra en régimen bajo el estado run. En este estado se reciben los datos provenientes de la tarea de captación y se los procesa. En función de las instrucciones enviadas por el usuario mediante la interfaz UART, se selecciona una configuración o modelo de funcionamiento, como por ejemplo el modo de detección de personas, que requiere además procesar la información suministrada por los sensores PIR.
 
-A modo de ejemplo, se muestra el fragmento de código \ref{cod:vControl}:
+Por último, el usuario puede solicitar la detención del sistema, forzando la transición al estado stop. En este estado la iluminación se apaga, aunque los periféricos permanecen activos y solo se desactivarán ante la detección de un error.
 
-\begin{lstlisting}[label=cod:vControl,caption=Pseudocódigo del lazo principal de control.]  % Start your code-block
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, height=12cm]{./Figures/sm.jpg}
+	\caption{Diagrama en bloques del sistema.}
+	\label{fig:maqestados}
+\end{figure}
 
-#define MAX_SENSOR_NUMBER 3
-#define MAX_ALARM_NUMBER  6
-#define MAX_ACTUATOR_NUMBER 6
+\subsubsection{Procesamiento de datos enviados por el usuario}
+Durante el estado de régimen, el usuario podrá controlar el encendido, apagado y secuencia de los LEDs, configurar el color y el brillo y sobre escribir la flash con las características físicas del sistema. PPara ello se utiliza un conjunto de bytes en el que el primero actúa como identificador del tipo de comando: estado de los LEDs, color, brillo o escritura de flash. A continuación se incluyen cuatro bytes de datos cuyo significado depende del identificador:
+\begin{itemize}
+    \item {Estado de los LEDs}: el primer byte define el modo de trabajo (todo encendido, todo apagado, secuencia o desactivado). Los tres restantes se descartan. 
+    \item {Color}: el primer byte se descarta y los tres siguientes indican la potencia de los colores rojo, verde y azul.
+    \item {Brillo}: el primer byte define la escala de brillo expresada en porcentaje, y los tres restantes se descartan.
+    \item {Escritura de flash}: el primer byte se descarta. El segundo define la cantidad de escalones, el tercero la longitud del escalón y el último la cantidad de LEDs por metro.
+\end{itemize}
+Finalmente, el código dispone de dos bytes de control de comunicación definido por el protocolo UART.
 
-uint32_t sensorValue[MAX_SENSOR_NUMBER];		
-FunctionalState alarmControl[MAX_ALARM_NUMBER];	//ENABLE or DISABLE
-state_t alarmState[MAX_ALARM_NUMBER];						//ON or OFF
-state_t actuatorState[MAX_ACTUATOR_NUMBER];			//ON or OFF
-
-void vControl() {
-
-	initGlobalVariables();
-	
-	period = 500 ms;
-		
-	while(1) {
-
-		ticks = xTaskGetTickCount();
-		
-		updateSensors();
-		
-		updateAlarms();
-		
-		controlActuators();
-		
-		vTaskDelayUntil(&ticks, period);
-	}
-}
-\end{lstlisting}
+\subsubsection{Reescritura de la configuración del hardware}
+Como ya se mencionó, el usuario puede cambiar la configuración del hardware y para ello se dispone de una sección de la flash donde se almacena la cantidad de escalones, la longitud de los mismo y la cantidad de LEDs por metro. Por defecto el sistema posee una configuración inicial y la misma debe actualizarse en el proceso de instalación, donde se realiza la sobreescritura y se procede a forzar un reinicio del microcontrolador.
+% \subsection{Tarea de captación de datos}
 
 
 
