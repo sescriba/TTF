@@ -55,7 +55,7 @@ Esta sección analiza el diseño del sistema de iluminación, la conectividad en
 	\label{fig:bloques}
 \end{figure}
 
-El bloque central del sistema es el de control. Está compuesto por el microcontrolador y se encarga del procesamiento de las señales de ingreso, de la generación de las señales de salida y de la comunicación con los diferentes sensores mediante los protocolos mencionados en la sección \ref{sec:protocolos}. También admnistra el almacenamiento, en la memoria interna, de toda la información vinculada a la configuración de hardware del producto.
+El bloque central del sistema es el de control. Está compuesto por el microcontrolador y se encarga del procesamiento de las señales de ingreso, de la generación de las señales de salida y de la comunicación con los diferentes sensores mediante los protocolos mencionados en la sección \ref{sec:protocolos}. También administra el almacenamiento, en la memoria interna, de toda la información vinculada a la configuración de hardware del producto.
 
 Por otro lado, el bloque de comunicación con el usuario está compuesto por el módulo Bluetooth, que permite una interacción bidireccional. De este modo, el usuario puede enviar comandos específicos de configuración del hardware y, además, realizar acciones de control como encendido, ajuste de brillo o selección de color. Este bloque se conecta al microcontrolador mediante protocolo UART.
 
@@ -83,6 +83,54 @@ De acuerdo a la sección \ref{sec:diseno}, el bloque de control está compuesto 
 
 El software utiliza un sistema operativo en tiempo real (RTOS, del inglés {it{Real-Time Operating System}}) en el que se ejecuta una tarea principal, encargada de inicializar el sistema operativo, y dos tareas secundarias: una destinada al control, procesamiento de datos y ejecución de comandos, y otra orientada a la captación de datos. Gracias a las características propias de un RTOS, estas tareas se ejecutan de manera pseudosimultánea y con igual prioridad, lo que incrementa la velocidad y la eficiencia del sistema.
 
+\subsection{Proceso de inicialización del sistema}
+\label{sec:init}
+Este proceso está orientado a realizar de manera efectiva la configuración inicial del software, dar comienzo al sistema operativo e inicializar los periféricos de comunicación y de control. Para ello, en un primer momento, se lee una configuración de hardware precargada en la memoria flash, donde se almacena la cantidad de escalones, longitud de los mismos y cantidad de LEDs por metro. Con esta información se predice automáticamente la cantidad de sensores y periféricos a ser inicializados y se comprueba que estén dentro de los límites máximos. Por ejemplo, si se dispone de cuatro escalones se puede predecir que el sistema posee cuatro sensores PIR y que es necesario un solo módulo extensor de puertos I\textsuperscript{2}C de ocho entradas.
+
+A continuación, el proceso de inicio crea un arreglo de códigos únicos por dispositivo de 32 bits, cuya función es almacenar información clave de los mismos: grupo o protocolo de comunicación, identificador del dispositivo dentro del grupo, dirección de memoria e identificador único. En la figura \ref{fig:codDIE} se puede apreciar esta codificación.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=7cm, height=4cm]{./Figures/codDIE.jpg}
+	\caption{Codificación de dispositivos.}
+	\label{fig:codDIE}
+\end{figure}
+
+Luego, haciendo uso de la HAL ({\it{Hardware Abstraction Layer}}) propia del microcontrolador, se procede a preconfigurar los periféricos de acuerdo al hardware instalado en el sistema. El listado a continuación hace referencia a todas las configuraciones necesarias de acuerdo al periférico citado.
+\begin{itemize}
+    \item {\texttt{I\textsuperscript{2}C}}:
+        \begin{itemize}
+            \item Instancia: I2C1.
+            \item Velocidad de reloj: 100000 Hz.
+            \item Modo de dirección: 7 bits.
+        \end{itemize}
+    \item {\texttt{UART}}:
+        \begin{itemize}
+            \item Instancia: UART4.
+            \item Velocidad de reloj: 115200 Hz.
+            \item Tamaño de palabra: 8 bits.
+            \item Bit de parada: 1 bit.
+            \item Paridad: No.
+            \item Modo: Full-Duplex.
+        \end{itemize}
+    \item {\texttt{Timer}}:
+        \begin{itemize}
+            \item Instancia: TIM1.
+            \item Reloj: interno.
+            \item Prescaler: 2 - 1.
+            \item Período: 105 - 1.
+            \item Contador: incremento.
+        \end{itemize}
+    \item {\texttt{GPIO}}:
+        \begin{itemize}
+            \item Instancia: Pin 6.
+            \item Modo: salida.
+            \item Pull-Up: no.
+        \end{itemize}
+\end{itemize}
+
+Finalmente, el sistema posee una estructura única de datos dinámica asociada al dispositivo. Si bien ya existe el arreglo de códigos, esta estructura permite manipular esos datos de acuerdo a las tareas involucradas en control del periférico, incorporando algunas banderas de estado, entre la que se destaca si el dispositivo se encuentra activo y listo para usar o si se obtuvo o no un dato mediante el mismo. Esta estructura es ampliamente utilizada por la tarea de captación de datos.
+
 \subsection{Tarea de control}
 Esta tarea presenta una máquina de estados secuencial encargada del flujo del código de acuerdo a condiciones variables o preexistentes. En la siguiente lista se enumeran los diferentes estados:
 \begin{itemize}
@@ -95,7 +143,7 @@ Esta tarea presenta una máquina de estados secuencial encargada del flujo del c
 
 Cada uno de estos estados tienen condiciones de ingreso que deben cumplirse para su ejecución y condiciones de escape que determinan su salida. En la figura \ref{fig:maqestados} se pueden observar las diferentes condiciones y el flujo general del sistema.
 
-El proceso de inicialización de la máquinas de estados consiste en inicializar la tarea de captación de datos y  configurar los diferentes periféricos del microcontrolador. En esta etapa se establece la comunicación I\textsuperscript{2}C y UART, se configura el timer utilizado para la generación de la señal PWM y se definen los puertos de entrada y salida destinados al control de las fuentes de alimentación. Luego se inicia un proceso de activación de periféricos. 
+El proceso de inicialización de la máquinas de estados consiste en inicializar la tarea de captación de datos y  configurar los diferentes periféricos del microcontrolador. En esta etapa se establece la comunicación I\textsuperscript{2}C y UART, se configura el timer utilizado para la generación de la señal PWM y se definen los puertos de entrada y salida destinados al control de las fuentes de alimentación. Luego se inicia un proceso de activación de periféricos y la inicialiazión de la estructura dinámica de códigos mencionada en la subsección \ref{sec:init}. 
 
 Estos periféricos se organizan en un listado de dispositivos, cada uno asociado a un valor numérico específico. Este valor está compuesto por 32 bits: los primeros 8 bits representan el protocolo de comunicación asignado, los siguientes 8 bits corresponden a un identificador único dentro de ese protocolo, los 8 bits posteriores almacenan la dirección del dispositivo y los últimos 8 bits definen un identificador único a nivel de sistema. A partir de esta lista de códigos se itera sobre cada periférico, inicializando una estructura de datos con los valores relevantes para su control. Se extraen el protocolo e identificador y se asignan banderas de estado (listo o no para comunicación) y de inicialización. Este mecanismo permite extrapolar el firmware a una cantidad variable de dispositivos conectados, brindando flexibilidad en el número de escalones a iluminar.
 
@@ -111,7 +159,7 @@ Por último, el usuario puede solicitar la detención del sistema, forzando la t
 \end{figure}
 
 \subsubsection{Procesamiento de datos enviados por el usuario}
-Durante el estado de régimen, el usuario podrá controlar el encendido, apagado y secuencia de los LEDs, configurar el color y el brillo y sobre escribir la flash con las características físicas del sistema. PPara ello se utiliza un conjunto de bytes en el que el primero actúa como identificador del tipo de comando: estado de los LEDs, color, brillo o escritura de flash. A continuación se incluyen cuatro bytes de datos cuyo significado depende del identificador:
+Durante el estado de régimen, el usuario podrá controlar el encendido, apagado y secuencia de los LEDs, configurar el color y el brillo y sobre escribir la flash con las características físicas del sistema. Para ello se utiliza un conjunto de bytes en el que el primero actúa como identificador del tipo de comando: estado de los LEDs, color, brillo o escritura de flash. A continuación se incluyen cuatro bytes de datos cuyo significado depende del identificador:
 \begin{itemize}
     \item {Estado de los LEDs}: el primer byte define el modo de trabajo (todo encendido, todo apagado, secuencia o desactivado). Los tres restantes se descartan. 
     \item {Color}: el primer byte se descarta y los tres siguientes indican la potencia de los colores rojo, verde y azul.
@@ -122,7 +170,10 @@ Finalmente, el código dispone de dos bytes de control de comunicación definido
 
 \subsubsection{Reescritura de la configuración del hardware}
 Como ya se mencionó, el usuario puede cambiar la configuración del hardware y para ello se dispone de una sección de la flash donde se almacena la cantidad de escalones, la longitud de los mismo y la cantidad de LEDs por metro. Por defecto el sistema posee una configuración inicial y la misma debe actualizarse en el proceso de instalación, donde se realiza la sobreescritura y se procede a forzar un reinicio del microcontrolador.
-% \subsection{Tarea de captación de datos}
+
+\subsection{Tarea de captación de datos}
+Esta tarea ejecuta ciclicamente un proceso de obtención de datos desde los sensores PIR y de aquellos ingresados por el usuario a través de la terminal UART.
+
 
 
 
