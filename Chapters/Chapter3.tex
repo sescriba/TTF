@@ -132,6 +132,7 @@ Luego, haciendo uso de la HAL ({\it{Hardware Abstraction Layer}}) propia del mic
 Finalmente, el sistema posee una estructura única de datos dinámica asociada al dispositivo. Si bien ya existe el arreglo de códigos, esta estructura permite manipular esos datos de acuerdo a las tareas involucradas en control del periférico, incorporando algunas banderas de estado, entre la que se destaca si el dispositivo se encuentra activo y listo para usar o si se obtuvo o no un dato mediante el mismo. Esta estructura es ampliamente utilizada por la tarea de captación de datos.
 
 \subsection{Tarea de control}
+\label{sec:control}
 Esta tarea presenta una máquina de estados secuencial encargada del flujo del código de acuerdo a condiciones variables o preexistentes. En la siguiente lista se enumeran los diferentes estados:
 \begin{itemize}
     \item {\texttt{SMPoweredDown}}: la máquina de estados se encuentra previamente apagada. Aquí se inicializan los periféricos, se encienden las fuentes de alimentación y se habilita la tarea de captación de datos.
@@ -172,8 +173,47 @@ Finalmente, el código dispone de dos bytes de control de comunicación definido
 Como ya se mencionó, el usuario puede cambiar la configuración del hardware y para ello se dispone de una sección de la flash donde se almacena la cantidad de escalones, la longitud de los mismo y la cantidad de LEDs por metro. Por defecto el sistema posee una configuración inicial y la misma debe actualizarse en el proceso de instalación, donde se realiza la sobreescritura y se procede a forzar un reinicio del microcontrolador.
 
 \subsection{Tarea de captación de datos}
-Esta tarea ejecuta ciclicamente un proceso de obtención de datos desde los sensores PIR y de aquellos ingresados por el usuario a través de la terminal UART.
+Esta tarea ejecuta cíclicamente un proceso de obtención de datos desde los sensores PIR y de aquellos ingresados por el usuario a través de la terminal UART. Este proceso es muy cercano a la capa de hardware del microcontrolador por lo que es anexionado a la HAL e incorpora dos funciones de interacción. Una de ellas se encarga de obtener datos a través del protocolo previamente especificado y otra de enviar datos mediante dicho protocolo o interaccionar con el timer o los GPIOs.
 
+Como se menciona en la subsección \ref{sec:init}, cada dispositivo del sistema posee una estructura única de datos que es utilizada para la interacción de datos con el periférico. Dicha estructura contiene información relacionada al código único de identificación del dispositivo, un bandera indicadora de estado (inicializado o no), la dirección de memoria para el protocolo I\textsuperscript{2}C o número de pin para GPIO (no utilizada para timer o UART) y una variable de almacenamiento del valor retornado por la HAL. De esta manera, las funciones de interacción pueden comunicarse con los distintos dispositivos, aplicando el protocolo correspondiente y sin generar interferencia en los demás periféricos. Una vez obtenidos los datos, esta tarea debe enviar lo mismos a la tarea de control. Para ello se dispone de dos colas de información, una para los datos pertenecientes a la interfaz de usuario y otra a los sensores PIR. 
 
+\subsubsection{Sensores PIR y protocolo I\textsuperscript{2}C}
+En cada ciclo de la tarea, el firmware del sistema se encarga de captar la información proveniente del sensor PIR que envía una señal digital al extensor de puertos. Mediante protocolo I\textsuperscript{2}C, se consulta al extensor sobre el estado de sus pines, previa verificación del estado del periférico, esperando a una interrupción producida por el protocolo. Una bandera global de sincronización se establece en estado ocupado y evitando un nuevo intento de comunicación. Luego, una vez producida la interrupción se llama al manejador de la misma. 
 
+Dado que el manejador puede acceder a la información del protocolo, se verifica qué dispositivo fue el generador de la interrupción (se identifica la dirección de memoria) y se almacena el estado de la transmisión con periférico, que pueden ser ocupado o listo. Si la comunicación se encuentra ocupada, el manejador almacena en una variable global dicho estado para el dispositivo especifico y retorna la función. En cambio, si el estado de la comunicación es listo, se verifica si previamente estuvo ocupado y, en caso positivo, se activa la bandera global de sincronización de comunicación terminada. Cabe destacar que esta bandera global de sincronización consta de dos bytes, uno que indica el estado general de la comunicación (ocupado o listo) y otro que indica que dispositivo se analizó. En este momento del proceso, se mantiene el byte de estado general como ocupado, dado que el proceso de obtención y análisis del dato aún no finalizo, pero es se establece como transacción finalizada para el periférico especifico. La figura \ref{fig:interruptioni2c} muestra estos estados y cómo interactúa con el proceso.
 
+Una vez la comunicación finalizó, se procede a gestionar el dato obtenido. Se almacena la información obtenida en un arreglo y se lo vincula al identificador del dispositivo, se establece la bandera global de sincronización en listo y se envía el dato a la tarea de control mediante una cola.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, height=16cm]{./Figures/inti2c.jpg}
+	\caption{Diagrama en bloques del proceso de interrupción I\textsuperscript{2}C.}
+	\label{fig:interruptioni2c}
+\end{figure}
+
+\subsubsection{Interfaz de usuario y protocolo UART}
+Al igual que el proceso de obtención de datos de los sensores PIR, el protocolo UART utiliza la estructura de obtención de datos. Si el dispositivo se encuentra inicializado, se establece la bandera global de sincronización en ocupado y se espera por datos ingresados por el usuario mediante una terminal. Una vez que los datos esten disponibles en el microcontrolador, se produce una interrupción capturada por el manejador del protocolo. Este manejador establece la bandera global de sincronización en listo y se procede a copiar los datos en un buffer interno para su posterior procesamiento. La figura \ref{fig:interruptionuart} muestra estos estados y cómo interactúa con el proceso.
+
+Como se menciona en el subsección \ref{sec:control}, el proceso de envío de datos le especifica al usuario el formato especifico del mensaje que debe enviar, junto con un final de carro y un salto de linea al final del mismo. Estos dos caracteres extras permiten el post procesamiento de la información recibida, indicando el fin del mensaje. Luego, esta información de distribuye en una arreglo de bytes con un orden especifico para ser enviado, mediante una cola, a la tarea de control.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm, height=16cm]{./Figures/intuart.jpg}
+	\caption{Diagrama en bloques del proceso de interrupción UART.}
+	\label{fig:interruptionuart}
+\end{figure}
+
+\subsubsection{Gestión de colas}
+Dada la característica del sistema, gestionado por dos tareas independientes, se torna necesario establecer un canal de comunicación entre ambas. Es por ello que se opta por el uso de las colas del sistema operativo. Así, la tarea de obtencion de datos, envía la información mediante dos colas independientes, una para los datos de los sensores PIR y otra para los datos ingresados por el usuario mediante protocolo UART. Este envío se efectúa una vez la información fue correctamente recibida y post procesada y, para ambos casos, se establece una bandera global de sincronización de cola en ocupado. La tarea de control se encuentra constantemente verificando si recibió información, analizando si la bandera esta en estado ocupado. Una vez recibido los datos y almacenados en un buffer, se libera la bandera global cambiando su estado a listo.
+
+\subsubsection{Generación PWM}
+Como ya se mencionó en la subsección \ref{sec:ledpixel}, el protocolo de control de los LEDs del sistema consta de un conjunto de 24 pulsos consecutivos que deben transferirse al dispositivo controlador. Estos pulsos son generados mediante un sistema PWM haciendo uso del timer del microcontrolador. La tarea de control, en base a la información recibida por los sensores y las especificaciones de color, brillo y modo de trabajo, genera una trama de pulsos valida para ser ejecutada por el timer. 
+
+Haciendo uso de un buffer, se envían los datos PWM a la HAL del microcontrolador, quien se encarga de producir la forma de onda correspondiente. Al inicio de este envío, se establece una bandera global de sincronización en ocupado y se aguarda a la generación de una interrupción. Una vez producida, un manejador establece la bandera en listo dando paso al siguiente conjunto de pulsos. La figura \ref{fig:interruptiontimer} muestra estos estados y cómo interactúa con el proceso.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5cm, height=8cm]{./Figures/inttimer.jpg}
+	\caption{Diagrama en bloques del proceso de interrupción Timer.}
+	\label{fig:interruptiontimer}
+\end{figure}

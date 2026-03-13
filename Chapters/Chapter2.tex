@@ -25,6 +25,7 @@ Cuenta con un gran número de entradas/salidas, convertidores analógicos-digita
 \footnotetext{\url{https://www.distrelec.ch/en/stm32-nucleo-board-2mb-256kb-st-nucleo-f429zi/p/30176552}}
 
 \subsection{Tira LED pixel}
+\label{sec:ledpixel}
 Para el desarrollo del sistema de iluminación se utiliza una tira LED del tipo pixel. Está formada por conjuntos de tres diodos emisores de luz, uno para cada color primario RGB, con un controlador modelo WS2812B \citep{LEDPIXEL} conectado en cadena. Este controlador incluye un registro de datos digitales, un circuito de amplificación y reformado de señal y un oscilador interno de alta precisión.
 
 Emplea un protocolo de comunicación NZR de un solo cable. El puerto de entrada recibe los datos enviados por el microcontrolador, los almacena en un registro interno y los transfiere por el puerto de salida al siguiente dispositivo conectado en la cadena, como se ilustra en la figura \ref{fig:led}. El dato está compuesto por 24 pulsos, ocho por cada color. Un cero lógico debe estar formado por 0,4 microsegundos en alto y 0,85 microsegundos en bajo, mientras que un uno lógico corresponde a 0,8 microsegundos en alto y 0,45 microsegundos en bajo. 
