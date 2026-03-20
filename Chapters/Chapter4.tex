@@ -3,7 +3,7 @@
 \chapter{Ensayos y resultados} % Main chapter title
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
-Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
+Este capítulo expone los resultados obtenidos a partir de pruebas de funcionamiento tanto en hardware como en software.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -11,5 +11,35 @@ Todos los capítulos deben comenzar con un breve párrafo introductorio que indi
 
 \section{Pruebas funcionales del hardware}
 \label{sec:pruebasHW}
+Esta sección expone las pruebas realizadas sobre el hardware del sistema. Cabe recordar que este proyecto es un prototipo funcional, por lo que las pruebas ejecutadas son para validar funcionamiento básico del sistema.
 
-La idea de esta sección es explicar cómo se hicieron los ensayos, qué resultados se obtuvieron y analizarlos.
+\subsection{Pruebas funcionales de los sensores PIR}
+Para probar el funcionamiento de los sensores PIR conectados al sistema, se procede a alimentar, de acuerdo a las especificaciones técnicas, con tensión y corriente al dispositivo. Por otro lado, se conecta al pin de salida digital un LED de baja potencia junto con una resistencia de 1 K$\Omega$ para verificar las señal generada.
+
+\subsubsection{Análisis de sensibilidad}
+Se coloca el sensor de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él, el cual se ejecuta a diferentes distancias del sensor, 30 cm, 1 m y 2 m. De esta manera se pretende verificar que el LED se encienda al movimiento y medir la sensibilidad del dispositivo.
+\begin{itemize}
+    \item {30 cm}: el LED enciende correctamente. 
+    \item {1 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
+    \item {2 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
+\end{itemize}
+Cabe destacar que una vez ajustada la sensibilidad, se procede a repetir las pruebas previas a fin de comprobar que el LED aún enciende correctamente frente al cambio de sensibilidad.
+
+\subsubsection{Detección de señal y uso de transistores}
+Se coloca el sensor de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él. Se verifica el correcto encendido del LED al ejecutarse el movimiento.
+
+\subsection{Pruebas funcionales de los extensores de puertos I\textsuperscript{2}C}
+Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. 
+\subsubsection{Análisis de trama de datos mediante protocolo I\textsuperscript{2}C}
+
+\subsection{Pruebas funcionales del módulo Bluetooth}
+\subsubsection{Prueba de señal mediante protocolo UART}
+
+\subsection{Pruebas funcionales de los LEDs}
+\subsubsection{Prueba de consumo de tensión y corriente}
+\subsubsection{Prueba de encendido}
+
+\section{Pruebas funcionales del software}
+\label{sec:pruebasSW}
+
+\subsection{Pruebas funcionales sobre la máquina de estados}

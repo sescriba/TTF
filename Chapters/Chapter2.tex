@@ -50,7 +50,8 @@ El sistema utiliza sensores infrarrojos de detección de movimiento del tipo PIR
 \footnotetext{\url{https://www.hobbytronica.com.ar}}
 
 \subsection{Módulo extensor de puertos}
-El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments \citep{EXTENSOR}, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. La figura \ref{fig:gpio} muestra ambas caras del componente.
+\label{sec:extensorpuertos}
+El sistema incorpora un módulo extensor de 8 puertos de entrada que permite la conexión de hasta 64 sensores PIR. Para este desarrollo se utiliza el componente PCF8574 de la marca Texas Instruments \citep{EXTENSOR}, que opera mediante una interfaz I\textsuperscript{2}C de 100 kHz con el microcontrolador y permite direccionar hasta 8 módulos en la misma línea de comunicación. Su tensión de trabajo es de 5 V y su consumo promedio es de 25 mA. En cuanto a la comunicación, el modulo extensor envía el estado de sus puertos como un byte de información. La figura \ref{fig:gpio} muestra ambas caras del componente.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm, height=5cm]{./Figures/extensorgpio.png}
