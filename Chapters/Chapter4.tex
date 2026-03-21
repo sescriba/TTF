@@ -17,27 +17,43 @@ Esta sección expone las pruebas realizadas sobre el hardware del sistema. Cabe 
 Para probar el funcionamiento de los sensores PIR conectados al sistema, se procede a alimentar, de acuerdo a las especificaciones técnicas, con tensión y corriente al dispositivo. Por otro lado, se conecta al pin de salida digital un LED de baja potencia junto con una resistencia de 1 K$\Omega$ para verificar las señal generada.
 
 \subsubsection{Análisis de sensibilidad}
-Se coloca el sensor de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él, el cual se ejecuta a diferentes distancias del sensor, 30 cm, 1 m y 2 m. De esta manera se pretende verificar que el LED se encienda al movimiento y medir la sensibilidad del dispositivo.
+Se coloca el sensor PIR de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él, el cual se ejecuta a diferentes distancias del sensor, 30 cm, 1 m y 2 m. De esta manera se pretende verificar que el LED se encienda al movimiento y medir la sensibilidad del dispositivo.
 \begin{itemize}
     \item {30 cm}: el LED enciende correctamente. 
     \item {1 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
     \item {2 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
 \end{itemize}
 Cabe destacar que una vez ajustada la sensibilidad, se procede a repetir las pruebas previas a fin de comprobar que el LED aún enciende correctamente frente al cambio de sensibilidad.
-
 \subsubsection{Detección de señal y uso de transistores}
-Se coloca el sensor de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él. Se verifica el correcto encendido del LED al ejecutarse el movimiento.
+Se conexiona el sensor PIR de acuerdo a la figura \ref{fig:transistor}, se lo coloca de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él. Se verifica que el LED permanece encendido cuando no hay movimiento y se apaga al ejecutarse el movimiento.
 
 \subsection{Pruebas funcionales de los extensores de puertos I\textsuperscript{2}C}
-Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. 
+Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. Para las pruebas a continuación se procede a realizar un pequeño firmware de test donde el microcontrolador sirve como maestro y el extensor de puertos como esclavo.
 \subsubsection{Análisis de trama de datos mediante protocolo I\textsuperscript{2}C}
+Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Observando la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama respuesta acorde a lo solicitado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, hight=10cm]{./Figures/trama.jpg}
+	\caption{Trama I\textsuperscript{2}C resultante.}
+	\label{fig:trama}
+\end{figure}
 
-\subsection{Pruebas funcionales del módulo Bluetooth}
-\subsubsection{Prueba de señal mediante protocolo UART}
+\subsection{Prueba funcional del módulo Bluetooth}
+Para la prueba del módulo Bluetooth se procede a desarrollar un pequeño firmware a ejecutar en el microcontrolador, con la finalidad de generar un eco del mensaje enviado desde una terminar UART conectada al módulo. Conexionando los dispositivos de acuerdo a la figura \ref{fig:testbt} y el módulo Bluetooth a la computadora, se procede a enviar un conjunto de bytes y esperar su eco. La prueba verificó el correcto funcionamiento del dispositivo al producir el eco esperado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, hight=10cm]{./Figures/testbt.jpg}
+	\caption{Conexión del módulo Bluetooth al microcontrolador.}
+	\label{fig:testbt}
+\end{figure}
 
 \subsection{Pruebas funcionales de los LEDs}
-\subsubsection{Prueba de consumo de tensión y corriente}
+\label{sec:pruebaled}
+A continuación se procede a verificar el correcto funcionamiento de la tira LED utilizada en el sistema. Se realizan pruebas de consumo tanto de tensión como de corriente y se verifica el correcto encendido de los mismos.
 \subsubsection{Prueba de encendido}
+Para esta prueba se desarrolla un pequeño firmware en el microcontrolador para producir el encendido de los LEDs mediante PWM. Al ejecutar el firmware los LED se encienden produciendo una tonalidad blanca, verificando el correcto funcionamiento de ellos. 
+\subsubsection{Prueba de consumo de tensión y corriente}
+Utilizando el mismo firmware de la prueba anterior, se procede a encender los LEDs, conectar un multímetro sobre el primer LED y el último del circuito y a medir su tensión. Luego, mediante una pinza amperométrica, se procede a medir la corriente consumida. Las mediciones arrojan 5 V de tensión sobre el primer y último LED, y una corriente de consumo de 3,9 A.
 
 \section{Pruebas funcionales del software}
 \label{sec:pruebasSW}
