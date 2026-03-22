@@ -57,5 +57,36 @@ Utilizando el mismo firmware de la prueba anterior, se procede a encender los LE
 
 \section{Pruebas funcionales del software}
 \label{sec:pruebasSW}
+Las pruebas funcionales de software persiguen el objetivo de validar el firmware desarrollado para el sistema. De esta manera, se ejecutan pruebas unitarias mediante el uso del depurador y pruebas generales de secciones de código implementado.
 
-\subsection{Pruebas funcionales sobre la máquina de estados}
+\subsection{Pruebas funcionales sobre la tarea de captación de datos}
+Para este conjunto de pruebas se hace uso del hardware finalizado de acuerdo al esquemático de la figura \ref{fig:schematic} y verificado en la sección \ref{sec:pruebasHW}. Al ejecutar las pruebas a continuación, se valida de manera complementaria el correcto funcionamiento de la iteración de la tarea del sistema operativo.
+\subsubsection{Pruebas de funcionamiento sobre la comunicación I2C}
+Haciendo uso del depurador se verifica que la inicialización del periférico I2C se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera llamando a la función de obtención de datos. Sin movimiento frente al sensor PIR, se valida que el dato recibido es el mismo sin variaciones. Al cambiar el estado del sensor PIR mediante un movimiento frente a él, se valida el cambio de información recibida.
+
+También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, a estado \texttt{listo}. Finalmente se verifica que los datos se hayan posprocesados y almacenado en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
+
+\subsubsection{Pruebas de funcionamiento sobre la comunicación UART}
+Haciendo uso del depurador se verifica que la inicialización del periférico UART se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera llamando a la función de obtención de datos. Al enviar un dato desde la terminal se puede validar la correcta recepción del mismo mediante un buffer de almacenamiento, correspondiendo a lo enviado por el usuario. 
+
+También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, a estado \texttt{listo}. Finalmente se verifica que los datos se hayan posprocesados y almacenado en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
+
+\subsubsection{Pruebas de funcionamiento sobre colas de comunicación entre tareas}
+Una vez obtenidos los datos y posprocesados y se los envía mediante la cola, se verifica mediante el uso del depurador, que los mismos fueron recibidos en el formato correspondiente en la tarea de control. También se valida que las banderas globales de sincronización cambian acorde a lo estimado.
+
+\subsection{Pruebas funcionales sobre la tarea de control}
+La tarea de control es uno de los principales bloques de código a verificar, ya que es quién comanda las acciones y decisiones del sistema y aloja la máquina de estados.
+\subsubsection{Pruebas de funcionamiento sobre la máquina de estados}
+Para verificar el correcto funcionamiento de la máquina de estados se procede a hacer uso del depurador y leer la variable global de estado actual de la máquina. Ya validada la tarea de obtención de datos y recepción de estos mediante las colas de sincronización, se analiza el flujo de la máquina de estados y cómo los mismos cambian a medida que la información varia.
+
+En primer término se verifica que el estado por defecto de la variable de estado es \texttt{SMPoweredDown} al iniciar el sistema. Luego se envía un mensaje mediante la UART para dar inicio a la ejecución del flujo y se verifica que el estado cambió a \texttt{SMPoweredUp}. Finalmente se verifica que los LEDs se encuentran apagados. Se repite el caso pero en este caso se fuerza a fallar la función de inicialización, obligando a la máquina de estado a ir a \texttt{SMModulePoweredDown}. Los LEDs no cambian su estado previo, y se valida que el sistema se deshabilitó y los periféricos fueron desinicializiados.
+
+En segundo lugar, luego de que el se verifica que el flujo sigue correctamente, se procede a enviar un mensaje de encendido, cambiando el estado a \texttt{SMRun} y encendiendo los LEDs en color blanco. Se repite la prueba forzando una falla en el encendido de los LEDs y validando que la máquina de estados cambia a \texttt{SMStop} y luego a \texttt{SMModulePoweredDown} y el sistema se deshabilita y los LEDs se apagan.
+
+El siguiente paso consiste en enviar un mensaje de deshabiltiación, forzando a ir al estado de \texttt{SMStop}. Los LEDs se apagan y cambia el estado a \texttt{SMPoweredUp}. Se valida también que el sistema queda habilitado a volver a iterar y lograr ir al estado \texttt{SMRun} repitiendo los pasos anteriores. Se fuerza una falla para que el sistema vaya a \texttt{SMModulePoweredDown} dehabilitandolo.
+
+\subsubsection{Pruebas funcionales sobre el cambio de configuración del sistema}
+
+
+\section{Prueba de funcionamiento general del sistema}
+Finalmente, se verifica el funcionamiento general del hardware de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras que se corre en el 
