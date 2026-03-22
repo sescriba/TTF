@@ -76,6 +76,7 @@ Una vez obtenidos los datos y posprocesados y se los envía mediante la cola, se
 
 \subsection{Pruebas funcionales sobre la tarea de control}
 La tarea de control es uno de los principales bloques de código a verificar, ya que es quién comanda las acciones y decisiones del sistema y aloja la máquina de estados.
+
 \subsubsection{Pruebas de funcionamiento sobre la máquina de estados}
 Para verificar el correcto funcionamiento de la máquina de estados se procede a hacer uso del depurador y leer la variable global de estado actual de la máquina. Ya validada la tarea de obtención de datos y recepción de estos mediante las colas de sincronización, se analiza el flujo de la máquina de estados y cómo los mismos cambian a medida que la información varia.
 
@@ -85,8 +86,43 @@ En segundo lugar, luego de que el se verifica que el flujo sigue correctamente, 
 
 El siguiente paso consiste en enviar un mensaje de deshabiltiación, forzando a ir al estado de \texttt{SMStop}. Los LEDs se apagan y cambia el estado a \texttt{SMPoweredUp}. Se valida también que el sistema queda habilitado a volver a iterar y lograr ir al estado \texttt{SMRun} repitiendo los pasos anteriores. Se fuerza una falla para que el sistema vaya a \texttt{SMModulePoweredDown} dehabilitandolo.
 
-\subsubsection{Pruebas funcionales sobre el cambio de configuración del sistema}
+\subsubsection{Pruebas de funcionamiento del PWM}
+Esta prueba consiste en verificar el correcto encendido de los LEDs en un color especifico al enviar una secuencia de pulso a partir de un dato preestablecido a través del depurador. El dato de 24 bits enviado se corresponde al color verde en sobre los LEDs. En la figura \ref{fig:verde} se puede apreciar que esta prueba fue pasada exitosamente.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, hight=10cm]{./Figures/verde.jpg}
+	\caption{Prueba de uso de PWM.}
+	\label{fig:verde}
+\end{figure}
 
+\subsubsection{Pruebas funcionales sobre el cambio de configuración del sistema}
+Estas pruebas consisten en comandar diferentes modos de configuración, color y brillo. Para ellos se enciende el sistema manteniendo la máquina de estados en \texttt{SMRun} y se envían los comandos mediante la terminal UART.
+
+Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, hight=10cm]{./Figures/rojo.jpg}
+	\caption{Prueba de cambio de color a rojo.}
+	\label{fig:rojo}
+\end{figure}
+
+A continuación se envía un comando para cambiar el brillo de los LEDs. En la figura \ref{fig:brillo} se puede apreciar el cambio.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm, hight=10cm]{./Figures/rojo.jpg}
+	\caption{Prueba de cambio de brillo.}
+	\label{fig:brillo}
+\end{figure}
+
+Finalmente se envían los comandos para cambiar el modo de configuración. Se reinicia el sistema y se mantiene la máquina de estados en \texttt{SMRun}. En la lista a continuación se detallan las pruebas.
+\begin{itemize}
+    \item {Apagado de los LEDs}: se envía comandos para apagar los LEDs, verificando que los mismos se apagan. 
+    \item {Encendido de los LEDs y mantiene}: se envía un comando para encender los LEDs a medida que el sensor detecta el movimiento y los mantiene encendidos, verificando el funcionamiento.
+    \item {Encendido de los LEDs y no mantiene}: se envía un comando para encender los LEDs a medida que el sensor detecta el movimiento pero no los mantiene encendidos, apagándolos al cabo de un tiempo. Se verifica el funcionamiento.
+    \item {Apagado de los LEDs y mantiene}: se envía un comando para apagar los LEDs previamente encendidos a medida que el sensor detecta el movimiento y los mantiene apagados, verificando el funcionamiento.
+    \item {Apagado de los LEDs y no mantiene}: se envía un comando para apagar los LEDs a medida que el sensor detecta el movimiento pero no los mantiene apagados, encendiéndolos al cabo de un tiempo. Se verifica el funcionamiento.
+\end{itemize} 
+Las pruebas anteriores verificaron correctamente el funcionamiento del sistema.
 
 \section{Prueba de funcionamiento general del sistema}
-Finalmente, se verifica el funcionamiento general del hardware de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras que se corre en el 
+Finalmente, se verifica el funcionamiento general del hardware y software de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras se corre en el firmware final desarrollado. Se envían diferentes comandos desde la terminal UART mientras se fuerza un movimiento en los sensores PIR, verificando que los comandos cambian de color, brillo y modo de trabajo correctamente. De manera paralela se verifica que dichos comandos se pueden ejecutar mientras los sensores detectan correctamente los movimientos del usuario.
