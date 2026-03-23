@@ -33,7 +33,7 @@ Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores
 Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Observando la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama respuesta acorde a lo solicitado.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, hight=10cm]{./Figures/trama.jpg}
+	\includegraphics[width=15cm, angle=90]{./Figures/trama.jpg}
 	\caption{Trama I\textsuperscript{2}C resultante.}
 	\label{fig:trama}
 \end{figure}
@@ -90,7 +90,7 @@ El siguiente paso consiste en enviar un mensaje de deshabiltiación, forzando a 
 Esta prueba consiste en verificar el correcto encendido de los LEDs en un color especifico al enviar una secuencia de pulso a partir de un dato preestablecido a través del depurador. El dato de 24 bits enviado se corresponde al color verde en sobre los LEDs. En la figura \ref{fig:verde} se puede apreciar que esta prueba fue pasada exitosamente.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, hight=10cm]{./Figures/verde.jpg}
+	\includegraphics[width=25cm, angle=90]{./Figures/verde.jpg}
 	\caption{Prueba de uso de PWM.}
 	\label{fig:verde}
 \end{figure}
@@ -101,7 +101,7 @@ Estas pruebas consisten en comandar diferentes modos de configuración, color y 
 Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, hight=10cm]{./Figures/rojo.jpg}
+	\includegraphics[width=18cm, angle=90]{./Figures/rojo.jpg}
 	\caption{Prueba de cambio de color a rojo.}
 	\label{fig:rojo}
 \end{figure}
@@ -109,7 +109,7 @@ Para el cambio de color, se enciende el sistema en color blanco y se envía el c
 A continuación se envía un comando para cambiar el brillo de los LEDs. En la figura \ref{fig:brillo} se puede apreciar el cambio.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, hight=10cm]{./Figures/rojo.jpg}
+	\includegraphics[width=20cm, angle=90]{./Figures/brillo.jpg}
 	\caption{Prueba de cambio de brillo.}
 	\label{fig:brillo}
 \end{figure}
@@ -125,4 +125,10 @@ Finalmente se envían los comandos para cambiar el modo de configuración. Se re
 Las pruebas anteriores verificaron correctamente el funcionamiento del sistema.
 
 \section{Prueba de funcionamiento general del sistema}
-Finalmente, se verifica el funcionamiento general del hardware y software de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras se corre en el firmware final desarrollado. Se envían diferentes comandos desde la terminal UART mientras se fuerza un movimiento en los sensores PIR, verificando que los comandos cambian de color, brillo y modo de trabajo correctamente. De manera paralela se verifica que dichos comandos se pueden ejecutar mientras los sensores detectan correctamente los movimientos del usuario.
+Finalmente, se verifica el funcionamiento general del hardware y software de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras se corre en el firmware final desarrollado. Se envían diferentes comandos desde la terminal UART mientras se fuerza un movimiento en los sensores PIR, verificando que los comandos cambian de color, brillo y modo de trabajo correctamente. De manera paralela se verifica que dichos comandos se pueden ejecutar mientras los sensores detectan correctamente los movimientos del usuario. En la figura \ref{fig:blanco} se puede apreciar el sistema completo en funcionamiento
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{./Figures/blanco.jpg}
+	\caption{Prueba general del sistema.}
+	\label{fig:blanco}
+\end{figure}
