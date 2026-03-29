@@ -11,35 +11,35 @@ Este capítulo expone los resultados obtenidos a partir de pruebas de funcionami
 
 \section{Pruebas funcionales del hardware}
 \label{sec:pruebasHW}
-Esta sección expone las pruebas realizadas sobre el hardware del sistema. Cabe recordar que este proyecto es un prototipo funcional, por lo que las pruebas ejecutadas son para validar funcionamiento básico del sistema.
+Esta sección expone las pruebas realizadas sobre el hardware del sistema. Cabe recordar que este trabajo consiste en un prototipo funcional, por lo que las pruebas ejecutadas son para validar funcionamiento básico del sistema.
 
 \subsection{Pruebas funcionales de los sensores PIR}
-Para probar el funcionamiento de los sensores PIR conectados al sistema, se procede a alimentar, de acuerdo a las especificaciones técnicas, con tensión y corriente al dispositivo. Por otro lado, se conecta al pin de salida digital un LED de baja potencia junto con una resistencia de 1 K$\Omega$ para verificar las señal generada.
+Para probar el funcionamiento de los sensores PIR conectados al sistema, se alimenta el dispositivo con la tensión y la corriente especificadas en su documentación técnica. Por otro lado, se conecta al pin de salida digital un LED de baja potencia junto con una resistencia de 1 k$\Omega$, con el fin de verificar las señal generada.
 
 \subsubsection{Análisis de sensibilidad}
-Se coloca el sensor PIR de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él, el cual se ejecuta a diferentes distancias del sensor, 30 cm, 1 m y 2 m. De esta manera se pretende verificar que el LED se encienda al movimiento y medir la sensibilidad del dispositivo.
+Se coloca el sensor PIR de manera estable sobre el borde de una mesa y el usuario realiza un movimiento frente a este a distintas distancias: 30 cm, 1 m y 2 m. De esta manera se busca verificar que el LED se encienda ante el movimiento y evaluar la sensibilidad del dispositivo.
 \begin{itemize}
-    \item {30 cm}: el LED enciende correctamente. 
-    \item {1 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
-    \item {2 m}: el LED enciende con intermitencias. Se ajusta la sensibilidad y enciende correctamente.
+    \item 30 cm: el LED enciende correctamente. 
+    \item 1 m: el LED enciende con intermitencias. Luego del ajuste de sensibilidad, enciende correctamente.
+    \item 2 m: el LED enciende con intermitencias. Luego del ajuste de sensibilidad, enciende correctamente.
 \end{itemize}
-Cabe destacar que una vez ajustada la sensibilidad, se procede a repetir las pruebas previas a fin de comprobar que el LED aún enciende correctamente frente al cambio de sensibilidad.
+Cabe destacar que una vez ajustada la sensibilidad, se repiten las pruebas previas a fin de comprobar que el LED continúe encendiendo correctamente frente al cambio relizado.
 \subsubsection{Detección de señal y uso de transistores}
 Se conexiona el sensor PIR de acuerdo a la figura \ref{fig:transistor}, se lo coloca de manera estable sobre el borde de una mesa y el usuario procede a realizar un movimiento frente a él. Se verifica que el LED permanece encendido cuando no hay movimiento y se apaga al ejecutarse el movimiento.
 
 \subsection{Pruebas funcionales de los extensores de puertos I\textsuperscript{2}C}
-Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. Para las pruebas a continuación se procede a realizar un pequeño firmware de test donde el microcontrolador sirve como maestro y el extensor de puertos como esclavo.
+Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. Para las pruebas que se mencionan a continuación, se procede a realizar un firmware de test donde el microcontrolador actúa como maestro y el extensor de puertos como esclavo.
 \subsubsection{Análisis de trama de datos mediante protocolo I\textsuperscript{2}C}
-Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Observando la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama respuesta acorde a lo solicitado.
+Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Al observar la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama donde el maestro requiere una operación de lectura y el esclavo responde con los valores del digitales del extensor de puerto.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm, angle=90]{./Figures/trama.jpg}
-	\caption{Trama I\textsuperscript{2}C resultante.}
+	\includegraphics[width=14cm, hight=14cm]{./Figures/trama.jpg}
+	\caption{Trama I\textsuperscript{2}C resultante para el caso de detección (arriba) y sin detección (abajo)}
 	\label{fig:trama}
 \end{figure}
 
 \subsection{Prueba funcional del módulo Bluetooth}
-Para la prueba del módulo Bluetooth se procede a desarrollar un pequeño firmware a ejecutar en el microcontrolador, con la finalidad de generar un eco del mensaje enviado desde una terminar UART conectada al módulo. Conexionando los dispositivos de acuerdo a la figura \ref{fig:testbt} y el módulo Bluetooth a la computadora, se procede a enviar un conjunto de bytes y esperar su eco. La prueba verificó el correcto funcionamiento del dispositivo al producir el eco esperado.
+Para la prueba del módulo Bluetooth, se desarrolla un firmware a ejecutar en el microcontrolador, con la finalidad de generar un eco del mensaje enviado desde una terminar UART conectada al módulo. Luego de conectar los dispositivos de acuerdo con la figura \ref{fig:testbt} y vincular el módulo Bluetooth a la computadora, se envía un conjunto de bytes y espera su eco. La prueba permitió verificar el correcto funcionamiento del dispositivo al producir el eco esperado.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm, hight=10cm]{./Figures/testbt.jpg}
@@ -49,48 +49,68 @@ Para la prueba del módulo Bluetooth se procede a desarrollar un pequeño firmwa
 
 \subsection{Pruebas funcionales de los LEDs}
 \label{sec:pruebaled}
-A continuación se procede a verificar el correcto funcionamiento de la tira LED utilizada en el sistema. Se realizan pruebas de consumo tanto de tensión como de corriente y se verifica el correcto encendido de los mismos.
+A continuación, se verifica el correcto funcionamiento de la tira LED utilizada en el sistema. Se realizan pruebas de consumo tanto de tensión como de corriente y se verifica el correcto encendido de los dispositivos.
 \subsubsection{Prueba de encendido}
-Para esta prueba se desarrolla un pequeño firmware en el microcontrolador para producir el encendido de los LEDs mediante PWM. Al ejecutar el firmware los LED se encienden produciendo una tonalidad blanca, verificando el correcto funcionamiento de ellos. 
+Para esta prueba, se desarrolla un firmware en el microcontrolador para producir el encendido de los LEDs mediante PWM. Al ejecutar el firmware los LED se encienden y producen una tonalidad blanca, lo que permite verificar el correcto funcionamiento. 
 \subsubsection{Prueba de consumo de tensión y corriente}
-Utilizando el mismo firmware de la prueba anterior, se procede a encender los LEDs, conectar un multímetro sobre el primer LED y el último del circuito y a medir su tensión. Luego, mediante una pinza amperométrica, se procede a medir la corriente consumida. Las mediciones arrojan 5 V de tensión sobre el primer y último LED, y una corriente de consumo de 3,9 A.
+A partir del mismo firmware de la prueba anterior, se encienden los LEDs y se conecta un multímetro sobre el primer y el último LED del circuito para medir la tensión. Luego, mediante una pinza amperométrica, se mide la corriente consumida. Las mediciones arrojan 5 V de tensión sobre el primer y último LED, y una corriente de consumo de 3,9 A.
 
 \section{Pruebas funcionales del software}
 \label{sec:pruebasSW}
 Las pruebas funcionales de software persiguen el objetivo de validar el firmware desarrollado para el sistema. De esta manera, se ejecutan pruebas unitarias mediante el uso del depurador y pruebas generales de secciones de código implementado.
 
 \subsection{Pruebas funcionales sobre la tarea de captación de datos}
-Para este conjunto de pruebas se hace uso del hardware finalizado de acuerdo al esquemático de la figura \ref{fig:schematic} y verificado en la sección \ref{sec:pruebasHW}. Al ejecutar las pruebas a continuación, se valida de manera complementaria el correcto funcionamiento de la iteración de la tarea del sistema operativo.
+Para este conjunto de pruebas se hace uso del hardware finalizado de acuerdo al esquemático de la figura \ref{fig:schematic} y verificado en la sección \ref{sec:pruebasHW}. Al ejecutar las pruebas que se presentan a continuación, se valida de manera complementaria el correcto funcionamiento de la iteración de la tarea del sistema operativo.
 \subsubsection{Pruebas de funcionamiento sobre la comunicación I2C}
-Haciendo uso del depurador se verifica que la inicialización del periférico I2C se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera llamando a la función de obtención de datos. Sin movimiento frente al sensor PIR, se valida que el dato recibido es el mismo sin variaciones. Al cambiar el estado del sensor PIR mediante un movimiento frente a él, se valida el cambio de información recibida.
-
-También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, a estado \texttt{listo}. Finalmente se verifica que los datos se hayan posprocesados y almacenado en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
-
-\subsubsection{Pruebas de funcionamiento sobre la comunicación UART}
-Haciendo uso del depurador se verifica que la inicialización del periférico UART se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera llamando a la función de obtención de datos. Al enviar un dato desde la terminal se puede validar la correcta recepción del mismo mediante un buffer de almacenamiento, correspondiendo a lo enviado por el usuario. 
-
-También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, a estado \texttt{listo}. Finalmente se verifica que los datos se hayan posprocesados y almacenado en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
-
-\subsubsection{Pruebas de funcionamiento sobre colas de comunicación entre tareas}
-Una vez obtenidos los datos y posprocesados y se los envía mediante la cola, se verifica mediante el uso del depurador, que los mismos fueron recibidos en el formato correspondiente en la tarea de control. También se valida que las banderas globales de sincronización cambian acorde a lo estimado.
-
-\subsection{Pruebas funcionales sobre la tarea de control}
-La tarea de control es uno de los principales bloques de código a verificar, ya que es quién comanda las acciones y decisiones del sistema y aloja la máquina de estados.
-
-\subsubsection{Pruebas de funcionamiento sobre la máquina de estados}
-Para verificar el correcto funcionamiento de la máquina de estados se procede a hacer uso del depurador y leer la variable global de estado actual de la máquina. Ya validada la tarea de obtención de datos y recepción de estos mediante las colas de sincronización, se analiza el flujo de la máquina de estados y cómo los mismos cambian a medida que la información varia.
-
-En primer término se verifica que el estado por defecto de la variable de estado es \texttt{SMPoweredDown} al iniciar el sistema. Luego se envía un mensaje mediante la UART para dar inicio a la ejecución del flujo y se verifica que el estado cambió a \texttt{SMPoweredUp}. Finalmente se verifica que los LEDs se encuentran apagados. Se repite el caso pero en este caso se fuerza a fallar la función de inicialización, obligando a la máquina de estado a ir a \texttt{SMModulePoweredDown}. Los LEDs no cambian su estado previo, y se valida que el sistema se deshabilitó y los periféricos fueron desinicializiados.
-
-En segundo lugar, luego de que el se verifica que el flujo sigue correctamente, se procede a enviar un mensaje de encendido, cambiando el estado a \texttt{SMRun} y encendiendo los LEDs en color blanco. Se repite la prueba forzando una falla en el encendido de los LEDs y validando que la máquina de estados cambia a \texttt{SMStop} y luego a \texttt{SMModulePoweredDown} y el sistema se deshabilita y los LEDs se apagan.
-
-El siguiente paso consiste en enviar un mensaje de deshabiltiación, forzando a ir al estado de \texttt{SMStop}. Los LEDs se apagan y cambia el estado a \texttt{SMPoweredUp}. Se valida también que el sistema queda habilitado a volver a iterar y lograr ir al estado \texttt{SMRun} repitiendo los pasos anteriores. Se fuerza una falla para que el sistema vaya a \texttt{SMModulePoweredDown} dehabilitandolo.
-
-\subsubsection{Pruebas de funcionamiento del PWM}
-Esta prueba consiste en verificar el correcto encendido de los LEDs en un color especifico al enviar una secuencia de pulso a partir de un dato preestablecido a través del depurador. El dato de 24 bits enviado se corresponde al color verde en sobre los LEDs. En la figura \ref{fig:verde} se puede apreciar que esta prueba fue pasada exitosamente.
+A partir del uso del depurador, se verifica que la inicialización del periférico I2C se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de su retorno correcto, el sistema itera mediante llamada a la función de obtención de datos. Sin movimiento frente al sensor PIR, se valida que el dato recibido permanezca sin variaciones. Al cambiar el estado del sensor PIR mediante un movimiento frente a él, se valida el cambio de información recibida. La figura \ref{fig:commi2cpir} muestra como cambió la información recibida al detectar movimiento en el sensor PIR.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=25cm, angle=90]{./Figures/verde.jpg}
+	\includegraphics[width=12cm, hight=12cm]{./Figures/commi2cpir.jpg}
+	\caption{Cambio en la información recibida al detectar movimiento en el sensor PIR.}
+	\label{fig:commi2cpir}
+\end{figure}
+
+También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, cambia a estado \texttt{listo}. Finalmente, se verifica que los datos hayan sido posprocesados y almacenados en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
+
+\subsubsection{Pruebas de funcionamiento sobre la comunicación UART}
+A partir del uso del depurador, se verifica que la inicialización del periférico UART se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera mediante llamadas a la función de obtención de datos. Al enviar un dato desde la terminal se puede validar su correcta recepción mediante un buffer de almacenamiento, cuyo contenido corresponde a la información enviada por el usuario. La figura \ref{fig:commuart} muestra como cambió la información recibida al enviar datos desde la terminal.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm, hight=12cm]{./Figures/commuart.jpg}
+	\caption{Estructura de datos recibida desde la terminal UART.}
+	\label{fig:commuart}
+\end{figure}
+
+También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, cambia a estado \texttt{listo}. Finalmente, se verifica que los datos hayan sido posprocesados y almacenados en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
+
+\subsubsection{Pruebas de funcionamiento sobre colas de comunicación entre tareas}
+Una vez obtenidos los datos y posprocesados, estos se los envía mediante la cola. A través del uso del depurador, se verifica que fueron recibidos en la tarea de control con el formato correspondiente. También se valida que las banderas globales de sincronización cambian de acuerdo con lo previsto.
+
+\subsection{Pruebas funcionales sobre la tarea de control}
+La tarea de control es uno de los principales bloques de código a verificar, ya que comanda las acciones y decisiones del sistema y aloja la máquina de estados.
+
+\subsubsection{Pruebas de funcionamiento sobre la máquina de estados}
+Para verificar el correcto funcionamiento de la máquina de estados, se hace uso del depurador con el fin de leer la variable global de estado actual de la máquina. Ya validada la tarea de obtención de datos y recepción de estos mediante las colas de sincronización, se analiza el flujo de la máquina de estados y la forma en que sus estados cambian a medida que la información varia.
+
+En primer término, se verifica que el estado por defecto de la variable de estado es \texttt{SMPoweredDown} al iniciar el sistema. Luego, se envía un mensaje mediante la UART para dar inicio a la ejecución del flujo y se verifica que el estado cambia a \texttt{SMPoweredUp}. Finalmente, se verifica que los LEDs se encuentran apagados. A continuación, se repite el caso, pero en esta oportunidad se fuerza una falla en la función de inicialización, lo que obliga a la máquina de estados a pasar a \texttt{SMModulePoweredDown}. Los LEDs no cambian su estado previo y se valida que el sistema se deshabilita y que los periféricos fueron desinicializados.
+
+En segundo lugar, una vez verificado que el flujo continúa correctamente, se procede a enviar un mensaje de encendido, cambiando el estado a \texttt{SMRun} y se encienden los LEDs en color blanco. Se repite la prueba y se fuerza una falla en el encendido de los LEDs, con el fin de validar que la máquina de estados cambie a \texttt{SMStop} y luego a \texttt{SMModulePoweredDown}, que el sistema se deshabilite y que los LEDs se apaguen.
+
+El siguiente paso consiste en enviar un mensaje de deshabilitación, lo que fuerza la transición al estado \texttt{SMStop}. Los LEDs se apagan y cambia el estado a \texttt{SMPoweredUp}. Se valida también que el sistema queda habilitado a volver a iterar y alcanzar nuevamente estado \texttt{SMRun} repitiendo los pasos anteriores. SPor último, se fuerza una falla para que el sistema pase a \texttt{SMModulePoweredDown} y quede deshabilitado.
+
+La figura \ref{fig:smtest} muestra como avanza el flujo de la máquina de estados a medida que se envían comandos por la terminal UART.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm, hight=14cm]{./Figures/smtest.jpg}
+	\caption{Flujo de la máquina de estados.}
+	\label{fig:smtest}
+\end{figure}
+
+\subsubsection{Pruebas de funcionamiento del PWM}
+Esta prueba consiste en verificar el correcto encendido de los LEDs en un color específico al enviar una secuencia de pulso a partir de un dato preestablecido a través del depurador. El dato de 24 bits enviado se corresponde al color verde sobre los LEDs. En la figura \ref{fig:verde} se puede apreciar que esta prueba fue pasada exitosamente.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{./Figures/verde.jpg}
 	\caption{Prueba de uso de PWM.}
 	\label{fig:verde}
 \end{figure}
@@ -98,37 +118,37 @@ Esta prueba consiste en verificar el correcto encendido de los LEDs en un color 
 \subsubsection{Pruebas funcionales sobre el cambio de configuración del sistema}
 Estas pruebas consisten en comandar diferentes modos de configuración, color y brillo. Para ellos se enciende el sistema manteniendo la máquina de estados en \texttt{SMRun} y se envían los comandos mediante la terminal UART.
 
-Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio.
+Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio, donde los LEDs estan de color rojo junto con el comando enviado por la terminal UART.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=18cm, angle=90]{./Figures/rojo.jpg}
+	\includegraphics[width=14cm]{./Figures/rojo.jpg}
 	\caption{Prueba de cambio de color a rojo.}
 	\label{fig:rojo}
 \end{figure}
 
-A continuación se envía un comando para cambiar el brillo de los LEDs. En la figura \ref{fig:brillo} se puede apreciar el cambio.
+A continuación, se envía un comando para cambiar el brillo de los LEDs. En la figura \ref{fig:brillo} se puede apreciar el cambio.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=20cm, angle=90]{./Figures/brillo.jpg}
+	\includegraphics[width=14cm]{./Figures/brillo.jpg}
 	\caption{Prueba de cambio de brillo.}
 	\label{fig:brillo}
 \end{figure}
 
-Finalmente se envían los comandos para cambiar el modo de configuración. Se reinicia el sistema y se mantiene la máquina de estados en \texttt{SMRun}. En la lista a continuación se detallan las pruebas.
+Finalmente, se envían los comandos para cambiar el modo de configuración. Se reinicia el sistema y se mantiene la máquina de estados en \texttt{SMRun}. En la siguiente lista se detallan las pruebas.
 \begin{itemize}
-    \item {Apagado de los LEDs}: se envía comandos para apagar los LEDs, verificando que los mismos se apagan. 
-    \item {Encendido de los LEDs y mantiene}: se envía un comando para encender los LEDs a medida que el sensor detecta el movimiento y los mantiene encendidos, verificando el funcionamiento.
+    \item {Apagado de los LEDs}: se envían comandos para apagar los LEDs y se verifica que estos se apagan. 
+    \item {Encendido de los LEDs y mantiene}: se envía un comando para encender los LEDs a medida que el sensor detecta el movimiento y los mantiene encendidos y se verifica el funcionamiento.
     \item {Encendido de los LEDs y no mantiene}: se envía un comando para encender los LEDs a medida que el sensor detecta el movimiento pero no los mantiene encendidos, apagándolos al cabo de un tiempo. Se verifica el funcionamiento.
-    \item {Apagado de los LEDs y mantiene}: se envía un comando para apagar los LEDs previamente encendidos a medida que el sensor detecta el movimiento y los mantiene apagados, verificando el funcionamiento.
+    \item {Apagado de los LEDs y mantiene}: se envía un comando para apagar los LEDs previamente encendidos a medida que el sensor detecta el movimiento y los mantiene apagados. Se verifica el funcionamiento.
     \item {Apagado de los LEDs y no mantiene}: se envía un comando para apagar los LEDs a medida que el sensor detecta el movimiento pero no los mantiene apagados, encendiéndolos al cabo de un tiempo. Se verifica el funcionamiento.
 \end{itemize} 
 Las pruebas anteriores verificaron correctamente el funcionamiento del sistema.
 
 \section{Prueba de funcionamiento general del sistema}
-Finalmente, se verifica el funcionamiento general del hardware y software de manera integra. Para este caso se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras se corre en el firmware final desarrollado. Se envían diferentes comandos desde la terminal UART mientras se fuerza un movimiento en los sensores PIR, verificando que los comandos cambian de color, brillo y modo de trabajo correctamente. De manera paralela se verifica que dichos comandos se pueden ejecutar mientras los sensores detectan correctamente los movimientos del usuario. En la figura \ref{fig:blanco} se puede apreciar el sistema completo en funcionamiento
+Finalmente, se verifica el funcionamiento general del hardware y software de manera integral. Para este caso, se conectan los dispositivos de acuerdo al esquemático de la figura \ref{fig:schematic} mientras se ejecuta el firmware final desarrollado. Se envían diferentes comandos desde la terminal UART y, en simultáneo se fuerza un movimiento en los sensores PIR, con el fin de verificar que los comandos modifican correctamente el color, el brillo y el modo de trabajo. De manera paralela, también se verifica que dichos comandos se pueden ejecutar mientras los sensores detectan de manera correcta los movimientos del usuario. En la figura \ref{fig:blanco} se puede apreciar el sistema completo en funcionamiento.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{./Figures/blanco.jpg}
+	\includegraphics[width=15cm]{./Figures/blanco.jpg}
 	\caption{Prueba general del sistema.}
 	\label{fig:blanco}
 \end{figure}

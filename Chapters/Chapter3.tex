@@ -73,12 +73,12 @@ Si bien el sistema de iluminación desarrollado en este trabajo constituye un pr
     \item Una protoboard, cables, transistores y resistencias.
 \end{itemize}
 \subsection{Desarrollo de hardware}
-Dado que el sistema constituye un prototipo funcional, se hace uso de una protoboard y cables para el desarrollo y conexionado del hardware. En este punto cabe destacar que todos los módulos mencionados ya poseen una electrónica interna, por lo que no es necesario hacer un desarrollo externo y simplemente se procede a su conexionado. Sin embargo, es necesario implementar un pequeño inversor digital para la salida de los sensores PIR. Esto se debe a que el módulo extensor de puertos requiere una lógica inversa para la detección de señal, siendo así que una detección positiva por parte del sensor PIR se traduzca en un cero lógico en el extensor de puertos.
+Dado que el sistema constituye un prototipo funcional, se hace uso de una protoboard y cables para el desarrollo y el conexionado del hardware. En este punto, cabe destacar que todos los módulos mencionados ya poseen una electrónica interna, por lo que no resulta necesario realizar un desarrollo externo y solo se requiere de su conexionado. Sin embargo, es necesario implementar un pequeño inversor digital para la salida de los sensores PIR. Esto se debe a que el módulo extensor de puertos requiere una lógica inversa para la detección de señal, de modo tal que una detección positiva por parte del sensor PIR se traduzca en un cero lógico en el extensor de puertos.
 
-Para este desarrollo, se conecta un transistor NPN al circuito de salida digital del sensor PIR. En la figura \ref{fig:transistor} se muestra el conexionado del transistor junto con los componentes pasivos para su funcionamiento. A modo explicativo, se incluye un LED que representa la conexión con el extensor de puertos.
+Para este desarrollo, se conecta un transistor NPN al circuito de salida digital del sensor PIR. En la figura \ref{fig:transistor} se muestra el conexionado del transistor junto con los componentes pasivos necesarios para su funcionamiento. A modo explicativo, se incluye un LED que representa la conexión con el extensor de puertos.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, height=16cm]{./Figures/transistor.jpg}
+	\includegraphics[width=6cm, height=10cm, angle=90]{./Figures/transistor.jpg}
 	\caption{Conexionado de la salida digital del sensor PIR a un transistor para invertir su señal.}
 	\label{fig:transistor}
 \end{figure}
@@ -87,28 +87,28 @@ De esta manera el LED se encuentra encendido por defecto y al detectar movimient
 Finalmente, en la imagen \ref{fig:schematic} se muestra el esquemático de todo el prototipo.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=25cm, angle=90]{./Figures/schematic.jpg}
+	\includegraphics[width=20cm, angle=90]{./Figures/schematic.jpg}
 	\caption{Esquemático del sistema.}
 	\label{fig:schematic}
 \end{figure}
 
 \subsection{Análisis de potencia}
-De acuerdo a las diferentes hojas de datos, todos los componentes mencionados en la sección \ref{sec:hardware} trabajan a 5 V, por lo que puede utilizarse la misma fuente de energía para todos ellos. Sin embargo, la potencia difiere significativamente, siendo la tira LED el elemento de mayor demanda energética. Cada LED de la tira consume un máximo aproximado de 60 mA y, considerando que cada metro contiene 60 LED, la potencia requerida asciende a 3,6 A (o 18 W) por escalón.
+De acuerdo a las diferentes hojas de datos, todos los componentes mencionados en la sección \ref{sec:hardware} operan a 5 V, por lo que es posible utilizar la misma fuente de alimentación para todos ellos. Sin embargo, la potencia requerida difiere significativamente, y la tira LED constituye el elemento de mayor demanda energética. Cada LED de la tira consume un máximo aproximado de 60 mA y, considerando que cada metro contiene 60 LED, la potencia requerida asciende a 3,6 A, equivalente a una potencia de 18 W por escalón.
 
-En cuanto al microcontrolador, su hoja de datos indica un consumo de 260 µA/MHz, lo que para una operación a 180 MHz implica un consumo cercano a 240 mW. Los sensores PIR requieren 300 mW cada uno, mientras que los extensores de puertos demandan alrededor de 500 mW. El módulo Bluetooth, considerando su placa de evaluación, especifica un consumo máximo de 200 mW. 
+En cuanto al microcontrolador, su hoja de datos indica un gasto de 260 µA/MHz, lo que para una operación a 180 MHz, implica un consumo cercano a 240 mW. Los sensores PIR requieren 300 mW cada uno, mientras que los extensores de puertos demandan alrededor de 500 mW. Por su parte, el módulo Bluetooth, en función de su placa de evaluación, especifica un consumo máximo de 200 mW. 
 
-Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. Cabe destacar que el 97\% del consumo total recae en la iluminación de la escalera, por lo que se dispone de una única fuente de energía que responda a las necesidades expuestas anteriormente, para todos los elementos del sistema.
+Finalmente, el prototipo para cuatro escalones consume aproximadamente 74 W. Cabe destacar que el 97\% del consumo total recae en la iluminación de la escalera. Por este motivo, se dispone de una única fuente de alimentación capaz de cubrir las necesidades previamente expuestas para todos los elementos del sistema.
 
 \section{Diseño y análisis del software}
-De acuerdo a la sección \ref{sec:diseno}, el bloque de control está compuesto por un microcontrolador que posee un software especifico para la aplicación de iluminación. En esta sección se habla de su diseño y se analizan sus componentes principales, dividiéndolo en diferentes módulos de implementación.
+De acuerdo a la sección \ref{sec:diseno}, el bloque de control está compuesto por un microcontrolador que posee un software específico para la aplicación de iluminación. En esta sección se habla de su diseño y se analizan sus componentes principales, a partir de una división en diferentes módulos de implementación.
 
-El software utiliza un sistema operativo en tiempo real (RTOS, del inglés {\it{Real-Time Operating System}}), en el que se ejecuta una tarea principal encargada de inicializar el sistema operativo, y dos tareas secundarias: una destinada al control, procesamiento de datos y ejecución de comandos, y otra orientada a la captación de datos. Gracias a las características propias de un RTOS, estas tareas se ejecutan de manera cuasi simultánea y con igual prioridad, lo que incrementa la velocidad y la eficiencia del sistema.
+El software utiliza un sistema operativo en tiempo real (RTOS, del inglés {\it{Real-Time Operating System}}), sobre el que se ejecuta una tarea principal encargada de inicializar el sistema operativo y dos tareas secundarias: una destinada al control, al procesamiento de datos y a la ejecución de comandos, y otra orientada a la captación de datos. Gracias a las características propias de un RTOS, estas tareas se ejecutan de manera cuasi simultánea y con igual prioridad, lo que incrementa la velocidad y la eficiencia del sistema.
 
 \subsection{Proceso de inicialización del sistema}
 \label{sec:init}
-Este proceso está orientado a realizar de manera efectiva la configuración inicial del software, dar comienzo al sistema operativo e inicializar los periféricos de comunicación y de control. Para ello, en un primer momento, se lee una configuración de hardware precargada en la memoria flash, donde se almacena la cantidad de escalones, longitud de los mismos y cantidad de LEDs por metro. Con esta información se predice automáticamente la cantidad de sensores y periféricos a ser inicializados y se comprueba que estén dentro de los límites máximos. Por ejemplo, si se dispone de cuatro escalones se puede predecir que el sistema posee cuatro sensores PIR y que es necesario un solo módulo extensor de puertos I\textsuperscript{2}C de ocho entradas.
+Este proceso tiene por finalidad realizar de manera efectiva la configuración inicial del software, dar comienzo al sistema operativo e inicializar los periféricos de comunicación y de control. Para ello, en una primera instancia, se lee una configuración de hardware precargada en la memoria flash, en la que se almacena la cantidad de escalones, su longitud y la cantidad de LEDs por metro. A partir de esta información, se determina automáticamente la cantidad de sensores y periféricos que deben inicializarse y se verifica que se encuentren dentro de los límites máximos. Por ejemplo, si se dispone de cuatro escalones, puede determinarse que el sistema posee cuatro sensores PIR y que requiere un único módulo extensor de puertos I\textsuperscript{2}C de ocho entradas.
 
-A continuación, el proceso de inicio crea un arreglo de códigos únicos por dispositivo de 32 bits, cuya función es almacenar información clave de los mismos: grupo o protocolo de comunicación, identificador del dispositivo dentro del grupo, dirección de memoria e identificador único. En la figura \ref{fig:codDIE} se puede apreciar esta codificación.
+A continuación, el proceso de inicio crea un arreglo de códigos únicos de 32 bits por dispositivo, cuya función es almacenar información clave de cada uno de ellos: grupo o protocolo de comunicación, identificador del dispositivo dentro del grupo, dirección de memoria e identificador único. En la figura \ref{fig:codDIE} se puede apreciar esta codificación.
 
 \begin{figure}[H]
 	\centering
@@ -117,7 +117,7 @@ A continuación, el proceso de inicio crea un arreglo de códigos únicos por di
 	\label{fig:codDIE}
 \end{figure}
 
-Luego, haciendo uso de la HAL ({\it{Hardware Abstraction Layer}}) propia del microcontrolador, se procede a preconfigurar los periféricos de acuerdo al hardware instalado en el sistema. El listado a continuación hace referencia a todas las configuraciones necesarias de acuerdo al periférico citado.
+Luego, mediante el uso de la HAL ({\it{Hardware Abstraction Layer}}) propia del microcontrolador, se preconfiguran los periféricos de acuerdo al hardware instalado en el sistema. El listado que se presenta a continuación hace referencia a todas las configuraciones necesarias para cada periférico citado.
 \begin{itemize}
     \item {\texttt{I\textsuperscript{2}C}}:
         \begin{itemize}
@@ -150,7 +150,7 @@ Luego, haciendo uso de la HAL ({\it{Hardware Abstraction Layer}}) propia del mic
         \end{itemize}
 \end{itemize}
 
-Finalmente, el sistema posee una estructura única de datos dinámica asociada al dispositivo. Si bien ya existe el arreglo de códigos, esta estructura permite manipular esos datos de acuerdo a las tareas involucradas en control del periférico, incorporando algunas banderas de estado, entre la que se destaca si el dispositivo se encuentra activo y listo para usar o si se obtuvo o no un dato mediante este. Esta estructura es ampliamente utilizada por la tarea de captación de datos.
+Finalmente, el sistema posee una estructura única de datos dinámica asociada al dispositivo. Si bien ya existe un arreglo único de códigos, esta estructura permite manipular dicha información de acuerdo a las tareas involucradas en control del periférico e incorpora algunas banderas de estado, entre las que se destacan la indicación de si el dispositivo se encuentra activo y listo para su uso, así como si fue posible obtener un dato a través de este. Esta estructura es ampliamente utilizada por la tarea de captación de datos.
 
 \subsection{Tarea de control}
 \label{sec:control}
@@ -160,62 +160,67 @@ Esta tarea presenta una máquina de estados secuencial encargada del flujo del c
     \item {\texttt{SMPoweredUp}}: la máquina de estados se encuentra previamente encendida. Aquí se le asigna una condición de encendido al controlador de luces del sistema.
     \item {\texttt{SMRun}}: es el estado central de la máquina de estados. Aquí se procesan los datos recibidos y se ejecutan los comandos de asignación de condición sobre la iluminación.
     \item {\texttt{SMStop}}: en caso de error o de apagado forzado, aquí se apaga el controlador de luces dejando en estado de reposo.
-    \item {\texttt{SMModulePoweredDown}}: el controlador de luces se encuentra previamente apagado. Aquí se apaga la máquina de estados, incluyendo periféricos y comunicación.
+    \item {\texttt{SMModulePoweredDown}}: el controlador de luces se encuentra previamente apagado. Aquí se apaga la máquina de estados y se incluyen los periféricos y los mecanismos de comunicación.
 \end{itemize}
 
-Cada uno de estos estados tienen condiciones de ingreso que deben cumplirse para su ejecución y condiciones de escape que determinan su salida. En la figura \ref{fig:maqestados} se pueden observar las diferentes condiciones y el flujo general del sistema.
+Cada uno de estos estados tienen condiciones de ingreso que deben cumplirse para su ejecución , así como condiciones de salida que determinan su finalización. En la figura \ref{fig:maqestados} se pueden observar las diferentes condiciones y el flujo general del sistema.
     
-El proceso de inicialización de la máquina de estados consiste en inicializar la tarea de captación de datos y  configurar los diferentes periféricos del microcontrolador. En esta etapa se establece la comunicación I\textsuperscript{2}C y UART, se configura el timer utilizado para la generación de la señal PWM y se definen los puertos de entrada y salida destinados al control de las fuentes de alimentación. Luego se inicia un proceso de activación de periféricos y la inicialización de la estructura dinámica de códigos mencionada en la subsección \ref{sec:init}. 
+El proceso de inicialización de la máquina de estados consiste en inicializar la tarea de captación de datos y  configurar los diferentes periféricos del microcontrolador. En esta etapa se establece la comunicación I\textsuperscript{2}C y UART, se configura el timer utilizado para la generación de la señal PWM y se definen los puertos de entrada y salida destinados al control de las fuentes de alimentación. Luego, se inicia el proceso de activación de periféricos y la inicialización de la estructura dinámica de códigos mencionada en la subsección \ref{sec:init}. 
 
-Estos periféricos se organizan en un listado de dispositivos, cada uno asociado a un valor numérico específico. Este valor está compuesto por 32 bits: los primeros 8 bits representan el protocolo de comunicación asignado, los siguientes 8 bits corresponden a un identificador único dentro de ese protocolo, los 8 bits posteriores almacenan la dirección del dispositivo y los últimos 8 bits definen un identificador único a nivel de sistema. A partir de esta lista de códigos se itera sobre cada periférico, inicializando una estructura de datos con los valores relevantes para su control. Se extraen el protocolo y el identificador, y se asignan banderas de estado (listo o no para comunicación) y de inicialización. Este mecanismo permite extrapolar el firmware a una cantidad variable de dispositivos conectados, brindando flexibilidad en el número de escalones a iluminar.
+Estos periféricos se organizan en un listado de dispositivos, cada uno asociado a un valor numérico específico. Este valor está compuesto por 32 bits: los primeros 8 bits representan el protocolo de comunicación asignado, los siguientes 8 bits corresponden a un identificador único dentro de ese protocolo, los 8 bits posteriores almacenan la dirección del dispositivo y los últimos 8 bits definen un identificador único a nivel de sistema. A partir de esta lista de códigos, se itera sobre cada periférico y se inicia una estructura de datos con los valores relevantes para su control. Se extraen el protocolo y el identificador, y se asignan banderas de estado, tales como listo o no para comunicación, y de inicialización. Este mecanismo permite extrapolar el firmware a una cantidad variable de dispositivos conectados y brinda flexibilidad en el número de escalones a iluminar.
 
 Una vez inicializado el sistema, se habilita la alimentación de los LEDs desde un pin de salida y se inicia la tarea de captación de datos. Finalmente, la iluminación se enciende con una configuración por defecto. Si no se detectan errores, el sistema entra en régimen bajo el estado \texttt{run}. En este estado se reciben los datos provenientes de la tarea de captación y se procesan. En función de las instrucciones enviadas por el usuario mediante la interfaz UART, se selecciona una configuración o modelo de funcionamiento, como por ejemplo el modo de detección de personas, que requiere además procesar la información suministrada por los sensores PIR.
 
-Por último, el usuario puede solicitar la detención del sistema, forzando la transición al estado \texttt{stop}. En este estado la iluminación se apaga, aunque los periféricos permanecen activos y solo se desactivarán ante la detección de un error.
+Por último, el usuario puede solicitar la detención del sistema, lo que fuerza la transición al estado \texttt{stop}. En este estado. la iluminación se apaga, aunque los periféricos permanecen activos y solo se desactivan ante la detección de un error.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=13cm, height=17cm]{./Figures/sm.jpg}
+    \includegraphics[width=11cm, height=15cm]{./Figures/sm.jpg}
     \caption{Diagrama en bloques de la máquina de estados.}
     \label{fig:maqestados}
 \end{figure}
 
 \subsubsection{Procesamiento de datos enviados por el usuario}
-Durante el estado de régimen, el usuario podrá controlar el encendido, apagado y secuencia de los LEDs, configurar el color y el brillo y sobrescribir la memoria con las características físicas del sistema. Para ello se utiliza un conjunto de bytes en el que el primero actúa como identificador del tipo de comando: estado de los LEDs, color, brillo o escritura de flash. A continuación se incluyen cuatro bytes de datos cuyo significado depende del identificador:
+Durante el estado de régimen, el usuario podrá controlar el encendido, apagado y secuencia de los LEDs, configurar el color y el brillo, y sobrescribir la memoria con las características físicas del sistema. Para ello, se utiliza un conjunto de bytes en el que el primero actúa como identificador del tipo de comando: estado de los LEDs, color, brillo o escritura en memoria flash. A continuación, se incluyen cuatro bytes de datos cuyo significado depende del identificador:
 \begin{itemize}
     \item {Estado de los LEDs}: el primer byte define el modo de trabajo (todo encendido, todo apagado, secuencia o desactivado). Los tres restantes se descartan. 
     \item {Color}: el primer byte se descarta y los tres siguientes indican la intensidad de los colores rojo, verde y azul.
     \item {Brillo}: el primer byte define la escala de brillo expresada en porcentaje, y los tres restantes se descartan.
-    \item {Escritura de flash}: el primer byte se descarta. El segundo define la cantidad de escalones, el tercero la longitud del escalón y el último la cantidad de LEDs por metro.
+    \item {Escritura en memoria flash}: el primer byte se descarta. El segundo define la cantidad de escalones, el tercero la longitud del escalón y el último la cantidad de LEDs por metro.
 \end{itemize}
 Finalmente, el código dispone de dos bytes de control de comunicación definidos por el protocolo UART.
 
 \subsubsection{Reescritura de la configuración del hardware}
-El usuario puede cambiar la configuración del hardware y, para ello, se dispone de una sección de la memoria donde se almacena la cantidad de escalones, su longitud y la cantidad de LEDs por metro. Por defecto el sistema posee una configuración inicial y esta debe actualizarse en el proceso de instalación, en el que se realiza la sobrescritura y se procede a forzar un reinicio del microcontrolador.
+El usuario puede cambiar la configuración del hardware y, para ello, se dispone de una sección de la memoria en la que se almacenan la cantidad de escalones, su longitud y la cantidad de LEDs por metro. Por defecto, el sistema posee una configuración inicial, que debe actualizarse durante el proceso de instalación. En esta instancia, se sobrescriben los valores almacenados y se fuerza el reinicio del microcontrolador.
 
 \subsection{Tarea de captación de datos}
-Esta tarea ejecuta cíclicamente un proceso de obtención de datos desde los sensores PIR y de aquellos ingresados por el usuario a través de la terminal UART. Este proceso es muy cercano a la capa de hardware del microcontrolador por lo que incorpora a la HAL e incorpora dos funciones de interacción. Una de ellas se encarga de obtener datos a través del protocolo previamente especificado y otra de enviar datos mediante dicho protocolo o interactuar con el timer o los GPIOs.
+Esta tarea ejecuta cíclicamente un proceso de obtención de datos desde los sensores PIR y de aquellos ingresados por el usuario a través de la terminal UART. Este proceso se encuentra muy próximo a la capa de hardware del microcontrolador, por lo que hace uso de la HAL e incorpora dos funciones de interacción. Una de ellas se encarga de obtener datos a través del protocolo previamente especificado, mientras que la otra permite enviar datos mediante ese protocolo o interactuar con el timer o los GPIOs.
 
-Como se menciona en la subsección \ref{sec:init}, cada dispositivo del sistema posee una estructura única de datos que es utilizada para la interacción con el periférico. Dicha estructura contiene información relacionada al código único de identificación del dispositivo, una bandera indicadora de estado (inicializado o no), la dirección de memoria para el protocolo I\textsuperscript{2}C o número de pin para GPIO (no utilizada para timer o UART) y una variable de almacenamiento del valor devuelto por la HAL. De esta manera, las funciones de interacción pueden comunicarse con los distintos dispositivos, aplicando el protocolo correspondiente y sin generar interferencia en los demás periféricos. 
+Como se menciona en la subsección \ref{sec:init}, cada dispositivo del sistema posee una estructura única de datos que es utilizada para la interacción con el periférico. Dicha estructura contiene información relacionada al código único de identificación del dispositivo, una bandera indicadora de estado (inicializado o no), la dirección de memoria para el protocolo I\textsuperscript{2}C o número de pin para GPIO (no utilizada para timer o UART) y una variable de almacenamiento del valor devuelto por la HAL. De esta manera, las funciones de interacción pueden comunicarse con los distintos dispositivos, aplicar el protocolo correspondiente y evitar interferencias sobre demás periféricos. 
 
 Una vez obtenidos los datos, esta tarea debe enviarlos a la tarea de control. Para ello se dispone de dos colas de información, una para los datos pertenecientes a la interfaz de usuario y otra para los sensores PIR. 
 
 \subsubsection{Sensores PIR y protocolo I\textsuperscript{2}C}
-En cada ciclo de la tarea, el firmware del sistema se encarga de captar la información proveniente del sensor PIR, que envía una señal digital al extensor de puertos. Mediante el protocolo I\textsuperscript{2}C, se consulta al extensor sobre el estado de sus pines, previa verificación del estado del periférico, a la espera de una interrupción producida por el protocolo. Una bandera global de sincronización se establece en estado ocupado, evitando un nuevo intento de comunicación. Luego, una vez producida la interrupción se invoca el manejador correspondiente.
-
-Dado que el manejador puede acceder a la información del protocolo, se verifica qué dispositivo generó la interrupción (se identifica la dirección de memoria) y se almacena el estado de la transmisión con periférico, que pueden ser \texttt{ocupado} o \texttt{listo}. Si la comunicación se encuentra ocupada, el manejador almacena en una variable global dicho estado para el dispositivo específico y retorna la función. En cambio, si el estado de la comunicación es \texttt{listo}, se verifica si previamente estuvo \texttt{ocupado} y, en caso positivo, se activa la bandera global de sincronización de comunicación terminada. Cabe destacar que esta bandera global de sincronización consta de dos bytes, uno que indica el estado general de la comunicación (\texttt{ocupado} o \texttt{listo}) y otro que indica qué dispositivo se analizó. En este momento del proceso, se mantiene el byte de estado general como \texttt{ocupado}, dado que el proceso de obtención y análisis del dato aún no finalizo, pero se establece como transacción finalizada para el periférico específico. La figura \ref{fig:interruptioni2c} muestra estos estados y cómo interactúa con el proceso.
-
-Una vez la comunicación finalizó, se procede a gestionar el dato obtenido. Se almacena la información obtenida en un arreglo y se vincula al identificador del dispositivo, se establece la bandera global de sincronización en \texttt{listo} y se envía el dato a la tarea de control mediante una cola.
-
+En cada ciclo de la tarea, el firmware del sistema se encarga de captar la información proveniente del sensor PIR, que envía una señal digital al extensor de puertos. La figura \ref{fig:interruptioni2c} muestra los diferentes estados y cómo estos interactúa en el proceso.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, height=20cm]{./Figures/inti2c.jpg}
+	\includegraphics[width=9cm, height=18cm]{./Figures/inti2c.jpg}
 	\caption{Diagrama en bloques del proceso de interrupción I\textsuperscript{2}C.}
 	\label{fig:interruptioni2c}
 \end{figure}
 
+Mediante el protocolo I\textsuperscript{2}C, se consulta al extensor sobre el estado de sus pines, previa verificación del estado del periférico, a la espera de una interrupción producida por el protocolo. Una bandera global de sincronización se establece en estado ocupado, con el fin de evitar un nuevo intento de comunicación. Luego, una vez producida la interrupción, se invoca el manejador correspondiente.
+
+Dado que el manejador puede acceder a la información del protocolo, se verifica qué dispositivo generó la interrupción, a partir de la identificación de la dirección de memoria, y se almacena el estado de la transmisión con el periférico, que puede ser \texttt{ocupado} o \texttt{listo}. Si la comunicación se encuentra ocupada, el manejador almacena en una variable global dicho estado para el dispositivo específico y retorna la función. En cambio, si el estado de la comunicación es \texttt{listo}, se verifica si previamente estuvo \texttt{ocupado} y, en caso positivo, se activa la bandera global de sincronización de comunicación terminada. Cabe destacar que esta bandera global de sincronización consta de dos bytes, uno que indica el estado general de la comunicación (\texttt{ocupado} o \texttt{listo}) y otro que indica qué dispositivo se analizó. En este momento del proceso, se mantiene el byte de estado general como \texttt{ocupado}, dado que el proceso de obtención y análisis del dato aún no finalizó, pero se establece como transacción finalizada para el periférico específico. 
+
+Una vez finalizada la comunicación, se procede a gestionar el dato obtenido. Se almacena la información obtenida en un arreglo y se vincula al identificador del dispositivo, se establece la bandera global de sincronización en \texttt{listo} y se envía el dato a la tarea de control mediante una cola.
+
 \subsubsection{Interfaz de usuario y protocolo UART}
-Al igual que el proceso de obtención de datos de los sensores PIR, el protocolo UART utiliza la estructura de obtención de datos. Si el dispositivo se encuentra inicializado, se establece la bandera global de sincronización en \texttt{ocupado} y se espera la recepción de datos ingresados por el usuario mediante una terminal. Una vez que los datos estén disponibles en el microcontrolador, se produce una interrupción capturada por el manejador del protocolo. Este manejador establece la bandera global de sincronización en \texttt{listo} y se procede a copiar los datos en un buffer interno para su posterior procesamiento. La figura \ref{fig:interruptionuart} muestra estos estados y cómo interactúan con el proceso.
+Al igual que el proceso de obtención de datos de los sensores PIR, el protocolo UART utiliza la estructura para la captación de datos. Si el dispositivo se encuentra inicializado, se establece la bandera global de sincronización en \texttt{ocupado} y se espera la recepción de datos ingresados por el usuario mediante una terminal. Una vez que los datos se encuentran disponibles en el microcontrolador, se produce una interrupción que es capturada por el manejador del protocolo. Este manejador establece la bandera global de sincronización en \texttt{listo} y luego se copian los datos en un buffer interno para su posterior procesamiento.
+
+Como se menciona en la subsección \ref{sec:control}, el proceso de envío de datos especifica al usuario el formato específico del mensaje que debe enviar, junto con un retorno de carro y un salto de línea al final. Estos dos caracteres adicionales permiten el posprocesamiento de la información recibida, ya que indican el fin del mensaje. Luego, esta información se distribuye en un arreglo de bytes con un orden específico para ser enviado, mediante una cola, a la tarea de control. 
+
+La figura \ref{fig:interruptionuart} muestra el proceso de obtención de datos desde la UART, su interacción con los diferentes estados de la tarea y su relación con la bandera global de sincronización.
 
 \begin{figure}[H]
 	\centering
@@ -224,19 +229,17 @@ Al igual que el proceso de obtención de datos de los sensores PIR, el protocolo
 	\label{fig:interruptionuart}
 \end{figure}
 
-Como se menciona en la subsección \ref{sec:control}, el proceso de envío de datos especifica al usuario el formato específico del mensaje que debe enviar, junto con un final de carro y un salto de línea al final del mismo. Estos dos caracteres extras permiten el post procesamiento de la información recibida, indicando el fin del mensaje. Luego, esta información de distribuye en un arreglo de bytes con un orden específico para ser enviado, mediante una cola, a la tarea de control.
-
 \subsubsection{Gestión de colas}
-Dada la característica del sistema, gestionado por dos tareas independientes, se torna necesario establecer un canal de comunicación entre ambas. Es por ello que se opta por el uso de las colas del sistema operativo. Así, la tarea de obtención de datos, envía la información mediante dos colas independientes, una para los datos de los sensores PIR y otra para los datos ingresados por el usuario mediante protocolo UART. Este envío se efectúa una vez que la información fue correctamente recibida y posprocesada y, para ambos casos, se establece una bandera global de sincronización de cola en \texttt{ocupado}. La tarea de control se verifica constantemente si recibió información, analizando si la bandera está en estado \texttt{ocupado}. Una vez recibidos los datos y almacenados en un buffer, se libera la bandera global cambiando su estado a listo.
+Dada la característica del sistema, gestionado por dos tareas independientes, se torna necesario establecer un canal de comunicación entre ambas. Es por ello que se opta por el uso de las colas del sistema operativo. Así, la tarea de obtención de datos envía la información mediante dos colas independientes: una para los datos de los sensores PIR y otra para los datos ingresados por el usuario mediante protocolo UART. Este envío se efectúa una vez que la información fue correctamente recibida y posprocesada y, para ambos casos, se establece una bandera global de sincronización de cola en \texttt{ocupado}. La tarea de control se verifica constantemente si recibió información, analizando si la bandera está en estado \texttt{ocupado}. Una vez recibidos los datos y almacenados en un buffer, se libera la bandera global y cambia su estado a listo.
 
 \subsubsection{Generación PWM}
-Como ya se mencionó en la subsección \ref{sec:ledpixel}, el protocolo de control de los LEDs del sistema consta de un conjunto de 24 pulsos consecutivos que deben transferirse al dispositivo controlador. Estos pulsos son generados mediante un sistema PWM haciendo uso del timer del microcontrolador. La tarea de control, en base a la información recibida por los sensores y las especificaciones de color, brillo y modo de trabajo, genera una trama de pulsos válida para ser ejecutada por el timer. 
-
-Haciendo uso de un buffer, se envían los datos PWM a la HAL del microcontrolador, que se encarga de producir la forma de onda correspondiente. Al inicio de este envío, se establece una bandera global de sincronización en \texttt{ocupado} y se aguarda a la generación de una interrupción. Una vez producida, el manejador establece la bandera en \texttt{listo} dando paso al siguiente conjunto de pulsos. La figura \ref{fig:interruptiontimer} muestra estos estados y cómo interactúan con el proceso.
-
+Como ya se mencionó en la subsección \ref{sec:ledpixel}, el protocolo de control de los LEDs del sistema consta de un conjunto de 24 pulsos consecutivos que deben transferirse al dispositivo controlador. Estos pulsos son generados mediante un sistema PWM, con uso del timer del microcontrolador. La figura \ref{fig:interruptiontimer} muestra el proceso de generación de la señal y cómo interactúan con el resto de la tarea.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm, height=20cm]{./Figures/inttimer.jpg}
+	\includegraphics[width=7cm, height=14cm]{./Figures/inttimer.jpg}
 	\caption{Diagrama en bloques del proceso de interrupción timer.}
 	\label{fig:interruptiontimer}
 \end{figure}
+
+A partir de la información recibida por los sensores y de las especificaciones de color, brillo y modo de trabajo, la tarea de control genera una trama de pulsos válida para su ejecución por parte del timer. A través de un buffer, se envían los datos PWM a la HAL del microcontrolador, que se encarga de producir la forma de onda correspondiente. Al inicio de este envío, se establece una bandera global de sincronización en \texttt{ocupado} y se aguarda a la generación de una interrupción. Una vez producida, el manejador establece la bandera en \texttt{listo} y habilita el envío del siguiente conjunto de pulsos.
+
