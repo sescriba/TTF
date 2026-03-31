@@ -30,7 +30,7 @@ Se conexiona el sensor PIR de acuerdo a la figura \ref{fig:transistor}, se lo co
 \subsection{Pruebas funcionales de los extensores de puertos I\textsuperscript{2}C}
 Como ya se mencionó en la subsección \ref{sec:extensorpuertos}, los extensores de puertos I\textsuperscript{2}C envían un byte de información con el estado general de todos sus puertos. Para las pruebas que se mencionan a continuación, se procede a realizar un firmware de test donde el microcontrolador actúa como maestro y el extensor de puertos como esclavo.
 \subsubsection{Análisis de trama de datos mediante protocolo I\textsuperscript{2}C}
-Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Al observar la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama donde el maestro requiere una operación de lectura y el esclavo responde con los valores del digitales del extensor de puerto.
+Se conecta a los pines de SCL y SDA un analizador lógico digital a fin de capturar una trama de requerimiento de información por parte del maestro y la respuesta correspondiente por parte del esclavo. Para este caso, se conecta el pin 1 del extensor a tierra y los demás pines a 5 V. Al observar la figura \ref{fig:trama} se puede verificar el correcto funcionamiento del extensor de puertos al obtener una trama donde el maestro requiere una operación de lectura y el esclavo responde con los valores digitales del extensor de puerto.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm, hight=14cm]{./Figures/trama.jpg}
@@ -62,7 +62,7 @@ Las pruebas funcionales de software persiguen el objetivo de validar el firmware
 \subsection{Pruebas funcionales sobre la tarea de captación de datos}
 Para este conjunto de pruebas se hace uso del hardware finalizado de acuerdo al esquemático de la figura \ref{fig:schematic} y verificado en la sección \ref{sec:pruebasHW}. Al ejecutar las pruebas que se presentan a continuación, se valida de manera complementaria el correcto funcionamiento de la iteración de la tarea del sistema operativo.
 \subsubsection{Pruebas de funcionamiento sobre la comunicación I2C}
-A partir del uso del depurador, se verifica que la inicialización del periférico I2C se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de su retorno correcto, el sistema itera mediante llamada a la función de obtención de datos. Sin movimiento frente al sensor PIR, se valida que el dato recibido permanezca sin variaciones. Al cambiar el estado del sensor PIR mediante un movimiento frente a él, se valida el cambio de información recibida. La figura \ref{fig:commi2cpir} muestra como cambió la información recibida al detectar movimiento en el sensor PIR.
+A partir del uso del depurador, se verifica que la inicialización del periférico I2C se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de su retorno correcto, el sistema itera mediante llamada a la función de obtención de datos. Sin movimiento frente al sensor PIR, se valida que el dato recibido permanezca sin variaciones. Al cambiar el estado del sensor PIR mediante un movimiento frente a él, se valida el cambio de información recibida. La figura \ref{fig:commi2cpir} muestra cómo cambia la información recibida al detectar movimiento en el sensor PIR.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm, hight=12cm]{./Figures/commi2cpir.jpg}
@@ -73,7 +73,7 @@ A partir del uso del depurador, se verifica que la inicialización del periféri
 También se valida el correcto cambio de la bandera global de sincronización. Al enviar el comando de lectura, el depurador muestra que esta cambió a estado \texttt{ocupado}. Luego, al recibir el dato, cambia a estado \texttt{listo}. Finalmente, se verifica que los datos hayan sido posprocesados y almacenados en el arreglo para su transferencia a la tarea de control con el formato correspondiente.
 
 \subsubsection{Pruebas de funcionamiento sobre la comunicación UART}
-A partir del uso del depurador, se verifica que la inicialización del periférico UART se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera mediante llamadas a la función de obtención de datos. Al enviar un dato desde la terminal se puede validar su correcta recepción mediante un buffer de almacenamiento, cuyo contenido corresponde a la información enviada por el usuario. La figura \ref{fig:commuart} muestra como cambió la información recibida al enviar datos desde la terminal.
+A partir del uso del depurador, se verifica que la inicialización del periférico UART se ejecuta correctamente al ser llamado desde la tarea de control mediante el estado \texttt{SMPowerUp}. Luego de retornar correctamente, el sistema itera mediante llamadas a la función de obtención de datos. Al enviar un dato desde la terminal se puede validar su correcta recepción mediante un buffer de almacenamiento, cuyo contenido corresponde a la información enviada por el usuario. La figura \ref{fig:commuart} muestra cómo cambia la información recibida al enviar datos desde la terminal.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm, hight=12cm]{./Figures/commuart.jpg}
@@ -98,7 +98,7 @@ En segundo lugar, una vez verificado que el flujo continúa correctamente, se pr
 
 El siguiente paso consiste en enviar un mensaje de deshabilitación, lo que fuerza la transición al estado \texttt{SMStop}. Los LEDs se apagan y cambia el estado a \texttt{SMPoweredUp}. Se valida también que el sistema queda habilitado a volver a iterar y alcanzar nuevamente estado \texttt{SMRun} repitiendo los pasos anteriores. SPor último, se fuerza una falla para que el sistema pase a \texttt{SMModulePoweredDown} y quede deshabilitado.
 
-La figura \ref{fig:smtest} muestra como avanza el flujo de la máquina de estados a medida que se envían comandos por la terminal UART.
+La figura \ref{fig:smtest} muestra cómo avanza el flujo de la máquina de estados a medida que se envían comandos por la terminal UART.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm, hight=14cm]{./Figures/smtest.jpg}
@@ -118,7 +118,7 @@ Esta prueba consiste en verificar el correcto encendido de los LEDs en un color 
 \subsubsection{Pruebas funcionales sobre el cambio de configuración del sistema}
 Estas pruebas consisten en comandar diferentes modos de configuración, color y brillo. Para ellos se enciende el sistema manteniendo la máquina de estados en \texttt{SMRun} y se envían los comandos mediante la terminal UART.
 
-Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio, donde los LEDs estan de color rojo junto con el comando enviado por la terminal UART.
+Para el cambio de color, se enciende el sistema en color blanco y se envía el comando correspondiente para cambiar el color de los LEDs a rojo. En la figura \ref{fig:rojo} se puede apreciar el cambio, donde los LEDs se ven de color rojo junto con el comando enviado por la terminal UART.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]{./Figures/rojo.jpg}
